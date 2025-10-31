@@ -1,4 +1,4 @@
-.PHONY: help setup install lint format test docker-up docker-down docker-build clean
+.PHONY: help setup install lint format test docker-up docker-down docker-build clean db-migrate db-seed
 
 help:
 	@echo "Available commands:"
@@ -10,6 +10,8 @@ help:
 	@echo "  make docker-up    - Start all services with docker-compose"
 	@echo "  make docker-down  - Stop all services"
 	@echo "  make docker-build - Rebuild and start services"
+	@echo "  make db-migrate   - Run database migrations"
+	@echo "  make db-seed      - Seed database with initial data"
 	@echo "  make clean        - Clean build artifacts"
 
 setup:
@@ -41,6 +43,14 @@ docker-down:
 
 docker-build:
 	@docker-compose up --build
+
+db-migrate:
+	@echo "Running database migrations..."
+	@cd backend && poetry run alembic upgrade head
+
+db-seed:
+	@echo "Seeding database with initial data..."
+	@cd backend && python manage.py seed
 
 clean:
 	@echo "Cleaning build artifacts..."

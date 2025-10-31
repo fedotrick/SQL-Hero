@@ -8,6 +8,7 @@ from sqlalchemy import (
     ForeignKey,
     Index,
     Integer,
+    JSON,
     String,
     Text,
     UniqueConstraint,
@@ -91,6 +92,9 @@ class Lesson(Base):
     module_id: Mapped[int] = mapped_column(ForeignKey("modules.id"), nullable=False, index=True)
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     content: Mapped[str | None] = mapped_column(Text, nullable=True)
+    theory: Mapped[str | None] = mapped_column(Text, nullable=True)
+    sql_solution: Mapped[str | None] = mapped_column(Text, nullable=True)
+    expected_result: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     order: Mapped[int] = mapped_column(Integer, nullable=False)
     estimated_duration: Mapped[int | None] = mapped_column(Integer, nullable=True)
     is_published: Mapped[bool] = mapped_column(default=False, nullable=False)
@@ -139,6 +143,7 @@ class Achievement(Base):
     __tablename__ = "achievements"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    code: Mapped[str] = mapped_column(String(50), unique=True, nullable=False, index=True)
     type: Mapped[AchievementType] = mapped_column(Enum(AchievementType), nullable=False, index=True)
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)

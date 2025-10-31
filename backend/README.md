@@ -70,6 +70,20 @@ poetry run alembic revision --autogenerate -m "description"
 poetry run alembic upgrade head
 ```
 
+## Database Seeding
+
+See [SEED.md](./SEED.md) for detailed seeding instructions.
+
+```bash
+# Load initial course data and achievements
+python manage.py seed
+```
+
+The seed command populates the database with:
+- 10 modules covering SQL basics to advanced topics
+- 2-3 lessons per module with Russian content
+- Sample achievements with codes and icons
+
 ## API Endpoints
 
 - `GET /`: Root endpoint with app info

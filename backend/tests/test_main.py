@@ -1,17 +1,34 @@
-from fastapi.testclient import TestClient
+import httpx
+import pytest
+from httpx import ASGITransport
 
 from app.main import app
 
-client = TestClient(app)
+
+@pytest.fixture
+async def client():
+    async with httpx.AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as ac:
+        yield ac
 
 
-def test_root():
-    response = client.get("/")
+async def test_root(client: httpx.AsyncClient):
+    response = await client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Hello from FastAPI backend!"}
+    data = response.json()
+    assert "app" in data
+    assert "version" in data
+    assert data["app"] == "Backend API"
+    assert data["version"] == "0.1.0"
 
 
-def test_health():
-    response = client.get("/health")
+async def test_health(client: httpx.AsyncClient):
+    response = await client.get("/health")
     assert response.status_code == 200
-    assert response.json() == {"status": "ok"}
+    data = response.json()
+    assert data["status"] == "ok"
+    assert "app" in data
+    assert "version" in data
+    assert data["app"] == "Backend API"
+    assert data["version"] == "0.1.0"

@@ -7,9 +7,11 @@ RUN pip install poetry && \
 
 COPY pyproject.toml poetry.lock* ./
 
-RUN poetry install --no-dev --no-interaction --no-ansi
+RUN poetry install --with dev --no-interaction --no-ansi
 
 COPY app ./app
+COPY alembic ./alembic
+COPY alembic.ini ./
 
 EXPOSE 8000
 

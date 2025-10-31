@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Backend API", version="0.1.0")
+from app.core.config import settings
+
+app = FastAPI(title=settings.app_name, version=settings.app_version)
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,9 +16,16 @@ app.add_middleware(
 
 @app.get("/")
 async def root() -> dict[str, str]:
-    return {"message": "Hello from FastAPI backend!"}
+    return {
+        "app": settings.app_name,
+        "version": settings.app_version,
+    }
 
 
 @app.get("/health")
 async def health() -> dict[str, str]:
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "app": settings.app_name,
+        "version": settings.app_version,
+    }

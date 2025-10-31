@@ -10,6 +10,11 @@ package-mode = false
 python = "^3.12"
 fastapi = "^0.120.3"
 uvicorn = {extras = ["standard"], version = "^0.38.0"}
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.0"}
+aiomysql = "^0.2.0"
+alembic = "^1.13.0"
+pydantic-settings = "^2.0.0"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.14.3"

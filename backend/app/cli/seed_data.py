@@ -1,4 +1,3 @@
-from datetime import datetime
 
 from app.models.database import AchievementType
 

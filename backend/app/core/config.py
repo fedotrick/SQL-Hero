@@ -22,6 +22,15 @@ class Settings(BaseSettings):
     telegram_bot_token: str = Field(default="", description="Telegram bot token")
     telegram_webhook_url: str = Field(default="", description="Telegram webhook URL")
 
+    jwt_secret_key: str = Field(
+        default="your-secret-key-change-in-production",
+        description="JWT secret key for token signing",
+    )
+    jwt_algorithm: str = Field(default="HS256", description="JWT algorithm")
+    jwt_access_token_expire_minutes: int = Field(
+        default=43200, description="JWT access token expiration in minutes (default: 30 days)"
+    )
+
     sandbox_enabled: bool = Field(default=False, description="Enable sandbox mode")
     sandbox_api_url: str = Field(
         default="http://localhost:8080", description="Sandbox API URL"

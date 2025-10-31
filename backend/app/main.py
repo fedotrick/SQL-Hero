@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.routers import auth, courses
+from app.routers import auth, courses, progress
 
 app = FastAPI(title=settings.app_name, version=settings.app_version)
 
@@ -16,6 +16,7 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(courses.router)
+app.include_router(progress.router)
 
 
 @app.get("/")

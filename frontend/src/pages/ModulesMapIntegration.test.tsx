@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "../test/utils";
+import { renderWithProviders as render, screen, waitFor } from "../test/utils";
 import userEvent from "@testing-library/user-event";
 import { ModulesMapPage } from "./ModulesMapPage";
 import { coursesService } from "../services/courses";
@@ -170,7 +170,7 @@ describe("ModulesMapPage Integration", () => {
 
   it("displays empty state when no modules match filter", async () => {
     const user = userEvent.setup();
-    
+
     const emptyResponse: ModuleListResponse = {
       items: [
         {
@@ -215,12 +215,12 @@ describe("ModulesMapPage Integration", () => {
 
     const availableFilter = screen.getByText("Доступные");
     await user.click(availableFilter);
-    
+
     expect(screen.getByText("Available Module")).toBeInTheDocument();
 
     const inProgressFilter = screen.getByText("В процессе");
     await user.click(inProgressFilter);
-    
+
     expect(screen.getByText("In Progress Module")).toBeInTheDocument();
     expect(screen.queryByText("Available Module")).not.toBeInTheDocument();
   });

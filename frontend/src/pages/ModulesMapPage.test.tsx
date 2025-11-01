@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "../test/utils";
+import { renderWithProviders as render, screen, waitFor } from "../test/utils";
 import { ModulesMapPage } from "./ModulesMapPage";
 import { coursesService } from "../services/courses";
 import { useAuthStore } from "../store/authStore";
@@ -71,9 +71,7 @@ describe("ModulesMapPage", () => {
   });
 
   it("renders loading screen initially", () => {
-    vi.mocked(coursesService.getModules).mockImplementation(
-      () => new Promise(() => {})
-    );
+    vi.mocked(coursesService.getModules).mockImplementation(() => new Promise(() => {}));
 
     render(<ModulesMapPage />);
     expect(screen.getByText("Authenticating...")).toBeInTheDocument();
@@ -92,9 +90,7 @@ describe("ModulesMapPage", () => {
   });
 
   it("renders error message on fetch failure", async () => {
-    vi.mocked(coursesService.getModules).mockRejectedValue(
-      new Error("Failed to fetch modules")
-    );
+    vi.mocked(coursesService.getModules).mockRejectedValue(new Error("Failed to fetch modules"));
 
     render(<ModulesMapPage />);
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "../../test/utils";
+import { renderWithProviders, screen } from "../../test/utils";
 import userEvent from "@testing-library/user-event";
 import { ModuleFilter } from "./ModuleFilter";
 
@@ -7,7 +7,7 @@ describe("ModuleFilter", () => {
   it("renders all filter options", () => {
     const handleFilterChange = vi.fn();
 
-    render(<ModuleFilter activeFilter="all" onFilterChange={handleFilterChange} />);
+    renderWithProviders(<ModuleFilter activeFilter="all" onFilterChange={handleFilterChange} />);
 
     expect(screen.getByText("Все")).toBeInTheDocument();
     expect(screen.getByText("Доступные")).toBeInTheDocument();
@@ -19,7 +19,7 @@ describe("ModuleFilter", () => {
     const user = userEvent.setup();
     const handleFilterChange = vi.fn();
 
-    render(<ModuleFilter activeFilter="all" onFilterChange={handleFilterChange} />);
+    renderWithProviders(<ModuleFilter activeFilter="all" onFilterChange={handleFilterChange} />);
 
     await user.click(screen.getByText("Доступные"));
 
@@ -30,7 +30,7 @@ describe("ModuleFilter", () => {
     const user = userEvent.setup();
     const handleFilterChange = vi.fn();
 
-    render(<ModuleFilter activeFilter="all" onFilterChange={handleFilterChange} />);
+    renderWithProviders(<ModuleFilter activeFilter="all" onFilterChange={handleFilterChange} />);
 
     await user.click(screen.getByText("В процессе"));
     expect(handleFilterChange).toHaveBeenCalledWith("in-progress");
@@ -42,7 +42,9 @@ describe("ModuleFilter", () => {
   it("applies active style to active filter", () => {
     const handleFilterChange = vi.fn();
 
-    render(<ModuleFilter activeFilter="available" onFilterChange={handleFilterChange} />);
+    renderWithProviders(
+      <ModuleFilter activeFilter="available" onFilterChange={handleFilterChange} />
+    );
 
     const availableButton = screen.getByText("Доступные");
     expect(availableButton).toBeInTheDocument();
@@ -52,7 +54,7 @@ describe("ModuleFilter", () => {
     const user = userEvent.setup();
     const handleFilterChange = vi.fn();
 
-    const { rerender } = render(
+    const { rerender } = renderWithProviders(
       <ModuleFilter activeFilter="all" onFilterChange={handleFilterChange} />
     );
 

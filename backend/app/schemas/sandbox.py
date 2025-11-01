@@ -27,6 +27,9 @@ class SandboxCreateResponse(BaseModel):
 
 class QueryExecuteRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=10000, description="SQL query to execute")
+    validate_against_expected: bool = Field(
+        default=False, description="Whether to validate against expected result"
+    )
 
 
 class QueryExecuteResponse(BaseModel):
@@ -35,6 +38,15 @@ class QueryExecuteResponse(BaseModel):
     row_count: int = Field(..., ge=0, description="Number of rows returned")
     execution_time: float = Field(..., ge=0, description="Query execution time in seconds")
     affected_rows: int | None = Field(default=None, description="Rows affected (for DML)")
+
+
+class QueryValidateResponse(BaseModel):
+    """Response for query validation with expected result comparison."""
+
+    passed: bool = Field(..., description="Whether the query result matches expected")
+    result: QueryExecuteResponse = Field(..., description="Query execution result")
+    differences: list[str] = Field(default=[], description="Differences from expected result")
+    message: str = Field(..., description="Human-readable message about the result")
 
 
 class QueryValidationResult(BaseModel):

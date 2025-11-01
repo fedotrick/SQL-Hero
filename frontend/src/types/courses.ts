@@ -46,7 +46,7 @@ export interface LessonDetail {
   content: string | null;
   theory: string | null;
   sql_solution: string | null;
-  expected_result: Record<string, any> | null;
+  expected_result: Record<string, unknown>[] | null;
   order: number;
   estimated_duration: number | null;
   is_published: boolean;

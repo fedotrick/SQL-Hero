@@ -7,19 +7,19 @@ import {
   ChevronLeft,
   ChevronRight,
   AlertCircle,
-  CheckCircle,
-  XCircle,
   Award,
   Zap,
 } from "lucide-react";
 import { LoadingScreen } from "../components/LoadingScreen";
 import { Card, CardContent, Button, Badge } from "../components/ui";
+import { SQLEditorWithToolbar, ResultTable } from "../components/sql";
 import { coursesService } from "../services/courses";
 import { progressService } from "../services/progress";
 import { useAuthStore } from "../store/authStore";
 import type { LessonDetail } from "../types/courses";
 import type { LessonAttemptResponse } from "../types/progress";
 import { telegramHaptics } from "../services/telegramHaptics";
+import { extractTableNames } from "../utils/sqlHelpers";
 
 export const LessonPlayerPage = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -32,6 +32,7 @@ export const LessonPlayerPage = () => {
   const [executing, setExecuting] = useState(false);
   const [result, setResult] = useState<LessonAttemptResponse | null>(null);
   const [showResult, setShowResult] = useState(false);
+  const [queryResult, setQueryResult] = useState<Record<string, unknown>[] | null>(null);
 
   useEffect(() => {
     const loadLesson = async () => {
@@ -69,20 +70,25 @@ export const LessonPlayerPage = () => {
     try {
       setExecuting(true);
       setShowResult(false);
+      setQueryResult(null);
       telegramHaptics.light();
 
       // For now, we'll do a simple check - in a real implementation,
       // this would execute the query in a sandbox and compare results
       const success = sqlQuery.trim().toLowerCase() === lesson.sql_solution?.toLowerCase().trim();
 
-      const attemptResult = await progressService.submitLessonAttempt(
-        token,
-        lesson.id,
-        {
-          user_query: sqlQuery,
-          success,
-        }
-      );
+      // Mock query result for demonstration
+      // In production, this would come from executing the query
+      const mockResult = [
+        { id: 1, name: "John Doe", email: "john@example.com" },
+        { id: 2, name: "Jane Smith", email: "jane@example.com" },
+      ];
+      setQueryResult(mockResult);
+
+      const attemptResult = await progressService.submitLessonAttempt(token, lesson.id, {
+        user_query: sqlQuery,
+        success,
+      });
 
       setResult(attemptResult);
       setShowResult(true);
@@ -231,12 +237,15 @@ export const LessonPlayerPage = () => {
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-base font-semibold text-telegram-text">SQL Редактор</h3>
               </div>
-              <textarea
+              <SQLEditorWithToolbar
                 value={sqlQuery}
-                onChange={(e) => setSqlQuery(e.target.value)}
-                placeholder="Введите ваш SQL запрос здесь..."
-                className="w-full h-32 p-3 bg-telegram-bg border border-telegram-hint/20 rounded-lg text-telegram-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-telegram-button resize-none"
+                onChange={setSqlQuery}
                 disabled={executing}
+                height="250px"
+                tableNames={extractTableNames(
+                  `${lesson.theory || ""} ${lesson.content || ""} ${lesson.sql_solution || ""}`
+                )}
+                showToolbar={true}
               />
               <Button
                 className="w-full mt-3"
@@ -258,6 +267,20 @@ export const LessonPlayerPage = () => {
             </CardContent>
           </Card>
 
+          {/* Query Results */}
+          {queryResult && queryResult.length > 0 && (
+            <ResultTable
+              result={queryResult}
+              expectedResult={
+                lesson.expected_result && Array.isArray(lesson.expected_result)
+                  ? lesson.expected_result
+                  : undefined
+              }
+              showDiff={!result?.success}
+              success={result?.success}
+            />
+          )}
+
           {/* Result Panel */}
           {showResult && result && (
             <Card
@@ -265,55 +288,44 @@ export const LessonPlayerPage = () => {
               className={result.success ? "border-green-500/50" : "border-red-500/50"}
             >
               <CardContent>
-                <div className="flex items-start gap-3">
-                  {result.success ? (
-                    <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={24} />
-                  ) : (
-                    <XCircle className="text-red-500 flex-shrink-0 mt-1" size={24} />
-                  )}
-                  <div className="flex-1">
-                    <h3
-                      className={`text-base font-semibold mb-2 ${
-                        result.success ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
-                      {result.success ? "Правильно! 🎉" : "Попробуйте еще раз"}
-                    </h3>
-                    <p className="text-telegram-subtitle text-sm mb-3">{result.message}</p>
+                <div className="space-y-3">
+                  <p className="text-telegram-subtitle text-sm">{result.message}</p>
 
-                    {result.success && (
-                      <div className="space-y-2">
+                  {result.success && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm">
+                        <Zap className="text-yellow-500" size={16} />
+                        <span className="text-telegram-text">
+                          +{result.xp_earned} XP
+                          {result.first_try && " (первая попытка!)"}
+                        </span>
+                      </div>
+                      {result.level_up && (
                         <div className="flex items-center gap-2 text-sm">
-                          <Zap className="text-yellow-500" size={16} />
+                          <Award className="text-purple-500" size={16} />
                           <span className="text-telegram-text">
-                            +{result.xp_earned} XP
-                            {result.first_try && " (первая попытка!)"}
+                            Новый уровень: {result.level}! 🎊
                           </span>
                         </div>
-                        {result.level_up && (
-                          <div className="flex items-center gap-2 text-sm">
-                            <Award className="text-purple-500" size={16} />
-                            <span className="text-telegram-text">
-                              Новый уровень: {result.level}! 🎊
-                            </span>
-                          </div>
-                        )}
-                        {result.achievements_unlocked.length > 0 && (
-                          <div className="mt-3 p-3 bg-telegram-bg rounded-lg">
-                            <p className="text-sm font-semibold text-telegram-text mb-2">
-                              Разблокированы достижения:
-                            </p>
-                            {result.achievements_unlocked.map((achievement) => (
-                              <div key={achievement.achievement_id} className="flex items-center gap-2 text-sm">
-                                {achievement.icon && <span>{achievement.icon}</span>}
-                                <span className="text-telegram-text">{achievement.title}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                      )}
+                      {result.achievements_unlocked.length > 0 && (
+                        <div className="mt-3 p-3 bg-telegram-bg rounded-lg">
+                          <p className="text-sm font-semibold text-telegram-text mb-2">
+                            Разблокированы достижения:
+                          </p>
+                          {result.achievements_unlocked.map((achievement) => (
+                            <div
+                              key={achievement.achievement_id}
+                              className="flex items-center gap-2 text-sm"
+                            >
+                              {achievement.icon && <span>{achievement.icon}</span>}
+                              <span className="text-telegram-text">{achievement.title}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

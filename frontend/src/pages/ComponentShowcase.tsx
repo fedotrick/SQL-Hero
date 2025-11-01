@@ -18,12 +18,8 @@ export const ComponentShowcase = () => {
     <div className="min-h-screen bg-telegram-bg pb-20">
       <div className="max-w-telegram mx-auto p-4 space-y-8">
         <header className="text-center py-6">
-          <h1 className="text-3xl font-bold text-telegram-text mb-2">
-            UI Components Showcase
-          </h1>
-          <p className="text-telegram-subtitle">
-            Reusable UI primitives for the application
-          </p>
+          <h1 className="text-3xl font-bold text-telegram-text mb-2">UI Components Showcase</h1>
+          <p className="text-telegram-subtitle">Reusable UI primitives for the application</p>
         </header>
 
         <section>
@@ -111,9 +107,7 @@ export const ComponentShowcase = () => {
                 <CardTitle>Outlined Card</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-telegram-subtitle">
-                  This card has a border outline.
-                </p>
+                <p className="text-telegram-subtitle">This card has a border outline.</p>
               </CardContent>
             </Card>
 
@@ -166,11 +160,19 @@ export const ComponentShowcase = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-medium text-telegram-subtitle mb-2">With Dot Indicator</h4>
+                  <h4 className="text-sm font-medium text-telegram-subtitle mb-2">
+                    With Dot Indicator
+                  </h4>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="success" dot>Active</Badge>
-                    <Badge variant="error" dot>Inactive</Badge>
-                    <Badge variant="warning" dot>Pending</Badge>
+                    <Badge variant="success" dot>
+                      Active
+                    </Badge>
+                    <Badge variant="error" dot>
+                      Inactive
+                    </Badge>
+                    <Badge variant="warning" dot>
+                      Pending
+                    </Badge>
                   </div>
                 </div>
 
@@ -198,7 +200,9 @@ export const ComponentShowcase = () => {
             <CardContent>
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-sm font-medium text-telegram-subtitle mb-2">Linear Progress</h4>
+                  <h4 className="text-sm font-medium text-telegram-subtitle mb-2">
+                    Linear Progress
+                  </h4>
                   <div className="space-y-3">
                     <ProgressBar value={progress} showLabel label="Course Progress" />
                     <div className="flex gap-2">
@@ -240,7 +244,9 @@ export const ComponentShowcase = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-medium text-telegram-subtitle mb-2">Circular Progress</h4>
+                  <h4 className="text-sm font-medium text-telegram-subtitle mb-2">
+                    Circular Progress
+                  </h4>
                   <div className="flex flex-wrap gap-4">
                     <CircularProgress value={progress} />
                     <CircularProgress value={progress} variant="success" />
@@ -250,7 +256,9 @@ export const ComponentShowcase = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-medium text-telegram-subtitle mb-2">Circular Sizes</h4>
+                  <h4 className="text-sm font-medium text-telegram-subtitle mb-2">
+                    Circular Sizes
+                  </h4>
                   <div className="flex flex-wrap items-center gap-4">
                     <CircularProgress value={75} size={48} strokeWidth={3} />
                     <CircularProgress value={75} size={64} strokeWidth={4} />
@@ -269,7 +277,9 @@ export const ComponentShowcase = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>Achievement Unlocked!</CardTitle>
-                  <Badge variant="success" dot>New</Badge>
+                  <Badge variant="success" dot>
+                    New
+                  </Badge>
                 </div>
               </CardHeader>
               <CardContent>
@@ -294,7 +304,9 @@ export const ComponentShowcase = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>Weekly Progress</CardTitle>
-                  <Badge variant="info" size="sm">Level 5</Badge>
+                  <Badge variant="info" size="sm">
+                    Level 5
+                  </Badge>
                 </div>
               </CardHeader>
               <CardContent>

@@ -105,9 +105,7 @@ export const ModulesMapPage = () => {
         <header className="text-center py-4">
           <Map className="mx-auto mb-3 text-telegram-button" size={48} />
           <h1 className="text-3xl font-bold text-telegram-text mb-2">Карта модулей</h1>
-          <p className="text-telegram-subtitle">
-            Пройдите все модули для завершения курса
-          </p>
+          <p className="text-telegram-subtitle">Пройдите все модули для завершения курса</p>
         </header>
 
         <div className="space-y-4">

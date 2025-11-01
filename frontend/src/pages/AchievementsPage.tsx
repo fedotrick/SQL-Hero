@@ -100,7 +100,9 @@ export const AchievementsPage = () => {
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-telegram-subtitle mb-3">{achievement.description}</p>
+                      <p className="text-sm text-telegram-subtitle mb-3">
+                        {achievement.description}
+                      </p>
                       {!achievement.unlocked && (
                         <ProgressBar value={achievement.progress} size="sm" />
                       )}

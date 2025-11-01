@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import { telegramHaptics } from "../services/telegramHaptics";
 import { telegramService } from "../services/telegram";
-import { Card, CardHeader, CardTitle, CardContent, Button, Badge, ProgressBar } from "../components/ui";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Button,
+  Badge,
+  ProgressBar,
+} from "../components/ui";
 
 export const HomePage = () => {
   const { user } = useAuthStore();
@@ -51,7 +59,11 @@ export const HomePage = () => {
               <div className="space-y-2">
                 <p className="text-telegram-text">
                   {user.first_name} {user.last_name}
-                  {user.username && <Badge className="ml-2" size="sm">@{user.username}</Badge>}
+                  {user.username && (
+                    <Badge className="ml-2" size="sm">
+                      @{user.username}
+                    </Badge>
+                  )}
                 </p>
                 <p className="text-xs text-telegram-hint">Telegram ID: {user.telegram_id}</p>
               </div>
@@ -67,21 +79,27 @@ export const HomePage = () => {
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="text-sm text-telegram-text">Модуль 1: Основы</span>
-                    <Badge variant="success" size="sm">Завершено</Badge>
+                    <Badge variant="success" size="sm">
+                      Завершено
+                    </Badge>
                   </div>
                   <ProgressBar value={100} variant="success" size="sm" />
                 </div>
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="text-sm text-telegram-text">Модуль 2: Продвинутый</span>
-                    <Badge variant="info" size="sm">В процессе</Badge>
+                    <Badge variant="info" size="sm">
+                      В процессе
+                    </Badge>
                   </div>
                   <ProgressBar value={65} size="sm" showLabel />
                 </div>
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="text-sm text-telegram-text">Модуль 3: Эксперт</span>
-                    <Badge variant="default" size="sm">Заблокировано</Badge>
+                    <Badge variant="default" size="sm">
+                      Заблокировано
+                    </Badge>
                   </div>
                   <ProgressBar value={0} size="sm" />
                 </div>
@@ -106,7 +124,9 @@ export const HomePage = () => {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-telegram-text">UI Компоненты</h2>
             <Link to="/showcase">
-              <Button size="sm" variant="outline">Посмотреть все</Button>
+              <Button size="sm" variant="outline">
+                Посмотреть все
+              </Button>
             </Link>
           </div>
           <Card>
@@ -165,7 +185,11 @@ export const HomePage = () => {
                   <Button size="sm" onClick={() => handleHapticClick("success")}>
                     Success
                   </Button>
-                  <Button size="sm" variant="destructive" onClick={() => handleHapticClick("error")}>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => handleHapticClick("error")}
+                  >
                     Error
                   </Button>
                   <Button size="sm" onClick={() => handleHapticClick("warning")}>

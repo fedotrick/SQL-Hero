@@ -37,7 +37,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
   ) => {
     const baseStyles = "rounded-lg transition-all";
     const interactiveStyles = interactive ? "cursor-pointer hover:shadow-md" : "";
-    
+
     return (
       <motion.div
         ref={ref}

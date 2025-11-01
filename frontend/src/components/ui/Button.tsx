@@ -16,7 +16,8 @@ export interface ButtonProps extends Omit<HTMLMotionProps<"button">, "size"> {
 const variantStyles: Record<ButtonVariant, string> = {
   primary: "bg-telegram-button text-telegram-button-text hover:opacity-90",
   secondary: "bg-telegram-secondary-bg text-telegram-text hover:opacity-90",
-  outline: "border-2 border-telegram-button text-telegram-button bg-transparent hover:bg-telegram-button hover:text-telegram-button-text",
+  outline:
+    "border-2 border-telegram-button text-telegram-button bg-transparent hover:bg-telegram-button hover:text-telegram-button-text",
   ghost: "text-telegram-button hover:bg-telegram-secondary-bg",
   destructive: "bg-telegram-destructive text-white hover:opacity-90",
 };
@@ -43,8 +44,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const baseStyles = "inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-telegram-button focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
-    
+    const baseStyles =
+      "inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-telegram-button focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+
     return (
       <motion.button
         ref={ref}

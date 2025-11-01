@@ -24,6 +24,32 @@ vi.mock("../store/authStore", () => ({
   useAuthStore: vi.fn(),
 }));
 
+// Mock Monaco Editor
+vi.mock("@monaco-editor/react", () => ({
+  default: ({ value, onChange }: { value: string; onChange: (value: string) => void }) => (
+    <textarea
+      data-testid="monaco-editor"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="Введите ваш SQL запрос здесь..."
+    />
+  ),
+}));
+
+// Mock useSQLEditor hooks
+vi.mock("../hooks/useSQLEditor", () => ({
+  useIsMobile: () => false,
+  useSQLEditor: (initialValue: string) => ({
+    value: initialValue,
+    setValue: vi.fn(),
+    insertText: vi.fn(),
+    cursorPosition: 0,
+    updateCursorPosition: vi.fn(),
+    reset: vi.fn(),
+    editorRef: { current: null },
+  }),
+}));
+
 const mockLesson: LessonDetail = {
   id: 1,
   module_id: 1,
@@ -85,7 +111,7 @@ describe("LessonPlayerPage", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText(/загрузка/i)).toBeInTheDocument();
+    expect(screen.getByText(/Authenticating/i)).toBeInTheDocument();
   });
 
   it("should render error state when lesson fetch fails", async () => {
@@ -144,9 +170,7 @@ describe("LessonPlayerPage", () => {
 
   it("should display attempts count", async () => {
     const lessonWithAttempts = { ...mockLesson, attempts: 3 };
-    vi.mocked(coursesService.coursesService.getLessonDetail).mockResolvedValue(
-      lessonWithAttempts
-    );
+    vi.mocked(coursesService.coursesService.getLessonDetail).mockResolvedValue(lessonWithAttempts);
 
     render(
       <MemoryRouter initialEntries={["/lessons/1"]}>

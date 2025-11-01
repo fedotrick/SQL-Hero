@@ -1,4 +1,4 @@
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { forwardRef } from "react";
 
 export type BadgeVariant = "default" | "success" | "warning" | "error" | "info" | "outline";
@@ -51,7 +51,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
         {dot && (
           <span className="w-1.5 h-1.5 rounded-full bg-current" />
         )}
-        {children}
+        {children as React.ReactNode}
       </motion.span>
     );
   }

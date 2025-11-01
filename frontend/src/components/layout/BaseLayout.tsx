@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useThemeStore } from "../../store/themeStore";
 import { useTelegramWebApp } from "../../hooks/useTelegramWebApp";
+import { BottomNavigation } from "../ui/BottomNavigation";
 
 interface BaseLayoutProps {
   children: ReactNode;
@@ -26,6 +27,7 @@ export const BaseLayout = ({ children }: BaseLayoutProps) => {
           </div>
         </header>
         <main className="min-h-[calc(100vh-64px)]">{children}</main>
+        <BottomNavigation />
       </div>
     </div>
   );

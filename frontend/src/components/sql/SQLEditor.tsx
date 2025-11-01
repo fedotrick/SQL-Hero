@@ -1,6 +1,6 @@
 import { useRef, useEffect, forwardRef, useImperativeHandle } from "react";
 import Editor, { type OnMount } from "@monaco-editor/react";
-import type { editor } from "monaco-editor";
+import type { editor, languages } from "monaco-editor";
 
 export interface SQLEditorHandle {
   getEditor: () => editor.IStandaloneCodeEditor | null;
@@ -114,7 +114,7 @@ export const SQLEditor = forwardRef<SQLEditorHandle, SQLEditorProps>(
             endColumn: word.endColumn,
           };
 
-          const suggestions: monaco.languages.CompletionItem[] = [];
+          const suggestions: languages.CompletionItem[] = [];
 
           // Add SQL keywords
           SQL_KEYWORDS.forEach((keyword) => {

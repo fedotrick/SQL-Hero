@@ -9,6 +9,7 @@ A collection of reusable UI primitives built with React, TypeScript, Tailwind CS
 Versatile button component with multiple variants, sizes, and states.
 
 **Variants:**
+
 - `primary` - Primary action button (default)
 - `secondary` - Secondary actions
 - `outline` - Outlined style
@@ -16,11 +17,13 @@ Versatile button component with multiple variants, sizes, and states.
 - `destructive` - For destructive actions
 
 **Sizes:**
+
 - `sm` - Small (text-sm, px-3 py-1.5)
 - `md` - Medium (text-base, px-4 py-2) (default)
 - `lg` - Large (text-lg, px-6 py-3)
 
 **Props:**
+
 - `variant?: ButtonVariant` - Button style variant
 - `size?: ButtonSize` - Button size
 - `fullWidth?: boolean` - Make button full width
@@ -30,13 +33,14 @@ Versatile button component with multiple variants, sizes, and states.
 - All standard button HTML attributes
 
 **Usage:**
+
 ```tsx
 import { Button } from "@/components/ui";
 import { Plus } from "lucide-react";
 
 <Button variant="primary" size="md" leftIcon={<Plus size={16} />}>
   Add Item
-</Button>
+</Button>;
 ```
 
 ### Card
@@ -44,27 +48,32 @@ import { Plus } from "lucide-react";
 Container component for grouping related content.
 
 **Variants:**
+
 - `default` - Standard background
 - `elevated` - With shadow
 - `outlined` - With border
 
 **Padding:**
+
 - `none` - No padding
 - `sm` - Small padding (p-3)
 - `md` - Medium padding (p-4) (default)
 - `lg` - Large padding (p-6)
 
 **Props:**
+
 - `variant?: CardVariant` - Card style variant
 - `padding?: CardPadding` - Padding size
 - `interactive?: boolean` - Add hover effects
 
 **Subcomponents:**
+
 - `CardHeader` - Header section
 - `CardTitle` - Title component
 - `CardContent` - Main content area
 
 **Usage:**
+
 ```tsx
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui";
 
@@ -72,10 +81,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui";
   <CardHeader>
     <CardTitle>Card Title</CardTitle>
   </CardHeader>
-  <CardContent>
-    Card content goes here
-  </CardContent>
-</Card>
+  <CardContent>Card content goes here</CardContent>
+</Card>;
 ```
 
 ### Badge
@@ -83,6 +90,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui";
 Small labels for displaying metadata, status, or categories.
 
 **Variants:**
+
 - `default` - Default style
 - `success` - Success/positive state
 - `warning` - Warning state
@@ -91,20 +99,25 @@ Small labels for displaying metadata, status, or categories.
 - `outline` - Outlined style
 
 **Sizes:**
+
 - `sm` - Small (text-xs, px-2 py-0.5)
 - `md` - Medium (text-sm, px-2.5 py-1) (default)
 - `lg` - Large (text-base, px-3 py-1.5)
 
 **Props:**
+
 - `variant?: BadgeVariant` - Badge style variant
 - `size?: BadgeSize` - Badge size
 - `dot?: boolean` - Show dot indicator
 
 **Usage:**
+
 ```tsx
 import { Badge } from "@/components/ui";
 
-<Badge variant="success" dot>Active</Badge>
+<Badge variant="success" dot>
+  Active
+</Badge>;
 ```
 
 ### ProgressBar
@@ -112,17 +125,20 @@ import { Badge } from "@/components/ui";
 Linear and circular progress indicators.
 
 **Variants:**
+
 - `default` - Uses theme button color
 - `success` - Green color
 - `warning` - Yellow color
 - `error` - Red color
 
 **Sizes (Linear):**
+
 - `sm` - Small (h-1)
 - `md` - Medium (h-2) (default)
 - `lg` - Large (h-3)
 
 **Props (ProgressBar):**
+
 - `value: number` - Current progress value (required)
 - `max?: number` - Maximum value (default: 100)
 - `size?: ProgressBarSize` - Bar size
@@ -132,6 +148,7 @@ Linear and circular progress indicators.
 - `animated?: boolean` - Enable animation (default: true)
 
 **Props (CircularProgress):**
+
 - `value: number` - Current progress value (required)
 - `max?: number` - Maximum value (default: 100)
 - `size?: number` - Circle size in pixels (default: 64)
@@ -140,6 +157,7 @@ Linear and circular progress indicators.
 - `showLabel?: boolean` - Show percentage label (default: true)
 
 **Usage:**
+
 ```tsx
 import { ProgressBar, CircularProgress } from "@/components/ui";
 
@@ -152,6 +170,7 @@ import { ProgressBar, CircularProgress } from "@/components/ui";
 Fixed bottom navigation bar for mobile apps with smooth animations.
 
 **Features:**
+
 - Fixed positioning at bottom
 - Animated active indicator
 - Icons with labels
@@ -159,18 +178,21 @@ Fixed bottom navigation bar for mobile apps with smooth animations.
 - Safe area support for notched devices
 
 **Navigation Items:**
+
 - Курс (Course) - BookOpen icon
 - Достижения (Achievements) - Trophy icon
 - Профиль (Profile) - User icon
 
 **Props:**
+
 - `className?: string` - Additional CSS classes
 
 **Usage:**
+
 ```tsx
 import { BottomNavigation } from "@/components/ui";
 
-<BottomNavigation />
+<BottomNavigation />;
 ```
 
 ## Design Tokens

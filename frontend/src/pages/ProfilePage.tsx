@@ -1,5 +1,12 @@
 import { User, Settings, LogOut, BookOpen, Trophy, Clock } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent, Badge, CircularProgress } from "../components/ui";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Badge,
+  CircularProgress,
+} from "../components/ui";
 
 export const ProfilePage = () => {
   const userProfile = {
@@ -75,7 +82,9 @@ export const ProfilePage = () => {
             <Card>
               <CardContent className="p-4 text-center">
                 <Trophy className="mx-auto mb-2 text-telegram-button" size={32} />
-                <div className="text-2xl font-bold text-telegram-text">{userProfile.achievements}</div>
+                <div className="text-2xl font-bold text-telegram-text">
+                  {userProfile.achievements}
+                </div>
                 <div className="text-sm text-telegram-subtitle mt-1">Достижений</div>
               </CardContent>
             </Card>
@@ -83,7 +92,9 @@ export const ProfilePage = () => {
             <Card>
               <CardContent className="p-4 text-center">
                 <Clock className="mx-auto mb-2 text-telegram-button" size={32} />
-                <div className="text-2xl font-bold text-telegram-text">{userProfile.hoursLearned}</div>
+                <div className="text-2xl font-bold text-telegram-text">
+                  {userProfile.hoursLearned}
+                </div>
                 <div className="text-sm text-telegram-subtitle mt-1">Часов обучения</div>
               </CardContent>
             </Card>

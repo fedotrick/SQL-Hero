@@ -6,6 +6,7 @@ import { ProfilePage } from "../pages/ProfilePage";
 import { ComponentShowcase } from "../pages/ComponentShowcase";
 import { ModulesMapPage } from "../pages/ModulesMapPage";
 import { LessonsListPage } from "../pages/LessonsListPage";
+import { LessonPlayerPage } from "../pages/LessonPlayerPage";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ export const router = createBrowserRouter([
     element: (
       <BaseLayout>
         <LessonsListPage />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: "/lessons/:lessonId",
+    element: (
+      <BaseLayout>
+        <LessonPlayerPage />
       </BaseLayout>
     ),
   },

@@ -2,11 +2,11 @@ import pytest
 
 from app.core.sandbox_config import SandboxConfig
 from app.schemas.sandbox import QueryValidationResult, SandboxStatus
+from app.services.query_validator import QueryValidator
 from app.services.sandbox import (
     InMemorySandboxManager,
     MockQueryExecutor,
     MockSchemaManager,
-    QueryValidator,
     SandboxService,
 )
 
@@ -96,42 +96,42 @@ class TestQueryValidator:
         result = validator.validate("DROP TABLE users")
 
         assert result.is_valid is False
-        assert any("blocked pattern" in error.lower() for error in result.errors)
+        assert any("blocked" in error.lower() for error in result.errors)
 
     def test_validate_create_database_blocked(self, sandbox_config: SandboxConfig) -> None:
         validator = QueryValidator(sandbox_config)
         result = validator.validate("CREATE DATABASE newdb")
 
         assert result.is_valid is False
-        assert any("blocked pattern" in error.lower() for error in result.errors)
+        assert any("blocked" in error.lower() for error in result.errors)
 
     def test_validate_alter_blocked(self, sandbox_config: SandboxConfig) -> None:
         validator = QueryValidator(sandbox_config)
         result = validator.validate("ALTER TABLE users ADD COLUMN age INT")
 
         assert result.is_valid is False
-        assert any("blocked pattern" in error.lower() for error in result.errors)
+        assert any("blocked" in error.lower() for error in result.errors)
 
     def test_validate_truncate_blocked(self, sandbox_config: SandboxConfig) -> None:
         validator = QueryValidator(sandbox_config)
         result = validator.validate("TRUNCATE TABLE users")
 
         assert result.is_valid is False
-        assert any("blocked pattern" in error.lower() for error in result.errors)
+        assert any("blocked" in error.lower() for error in result.errors)
 
     def test_validate_information_schema_blocked(self, sandbox_config: SandboxConfig) -> None:
         validator = QueryValidator(sandbox_config)
         result = validator.validate("SELECT * FROM information_schema.tables")
 
         assert result.is_valid is False
-        assert any("blocked pattern" in error.lower() for error in result.errors)
+        assert any("system schema" in error.lower() or "blocked" in error.lower() for error in result.errors)
 
     def test_validate_mysql_schema_blocked(self, sandbox_config: SandboxConfig) -> None:
         validator = QueryValidator(sandbox_config)
         result = validator.validate("SELECT * FROM mysql.user")
 
         assert result.is_valid is False
-        assert any("blocked pattern" in error.lower() for error in result.errors)
+        assert any("system schema" in error.lower() or "blocked" in error.lower() for error in result.errors)
 
     def test_validate_with_cte(self, sandbox_config: SandboxConfig) -> None:
         validator = QueryValidator(sandbox_config)

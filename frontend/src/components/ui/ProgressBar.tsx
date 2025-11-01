@@ -53,7 +53,9 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
             <span className="text-sm text-telegram-subtitle">{Math.round(percentage)}%</span>
           </div>
         )}
-        <div className={`w-full bg-telegram-secondary-bg rounded-full overflow-hidden ${sizeStyles[size]}`}>
+        <div
+          className={`w-full bg-telegram-secondary-bg rounded-full overflow-hidden ${sizeStyles[size]}`}
+        >
           <motion.div
             className={`h-full rounded-full ${variantStyles[variant]}`}
             initial={{ width: 0 }}
@@ -107,7 +109,11 @@ export const CircularProgress = forwardRef<HTMLDivElement, CircularProgressProps
     }[variant];
 
     return (
-      <div ref={ref} className={`relative inline-flex items-center justify-center ${className}`} {...props}>
+      <div
+        ref={ref}
+        className={`relative inline-flex items-center justify-center ${className}`}
+        {...props}
+      >
         <svg width={size} height={size} className="transform -rotate-90">
           <circle
             cx={size / 2}
@@ -133,7 +139,9 @@ export const CircularProgress = forwardRef<HTMLDivElement, CircularProgressProps
         </svg>
         {showLabel && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-sm font-semibold text-telegram-text">{Math.round(percentage)}%</span>
+            <span className="text-sm font-semibold text-telegram-text">
+              {Math.round(percentage)}%
+            </span>
           </div>
         )}
       </div>

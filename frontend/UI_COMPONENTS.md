@@ -9,11 +9,13 @@ The UI shell components system provides a comprehensive set of reusable primitiv
 ## Components Implemented
 
 ### 1. Button Component
+
 **Location:** `src/components/ui/Button.tsx`
 
 A versatile button component with multiple variants and states.
 
 **Features:**
+
 - 5 variants: primary, secondary, outline, ghost, destructive
 - 3 sizes: sm, md, lg
 - Icon support (left/right)
@@ -23,6 +25,7 @@ A versatile button component with multiple variants and states.
 - Disabled state
 
 **Example:**
+
 ```tsx
 <Button variant="primary" size="md" leftIcon={<Plus />}>
   Add Item
@@ -30,17 +33,20 @@ A versatile button component with multiple variants and states.
 ```
 
 ### 2. Card Component
+
 **Location:** `src/components/ui/Card.tsx`
 
 Container component for grouping related content with multiple sub-components.
 
 **Features:**
+
 - 3 variants: default, elevated, outlined
 - 4 padding options: none, sm, md, lg
 - Interactive mode with hover/tap effects
 - Sub-components: CardHeader, CardTitle, CardContent
 
 **Example:**
+
 ```tsx
 <Card variant="elevated" interactive>
   <CardHeader>
@@ -51,27 +57,34 @@ Container component for grouping related content with multiple sub-components.
 ```
 
 ### 3. Badge Component
+
 **Location:** `src/components/ui/Badge.tsx`
 
 Small labels for displaying status, metadata, or categories.
 
 **Features:**
+
 - 6 variants: default, success, warning, error, info, outline
 - 3 sizes: sm, md, lg
 - Optional dot indicator
 - Fade-in animation
 
 **Example:**
+
 ```tsx
-<Badge variant="success" dot>Active</Badge>
+<Badge variant="success" dot>
+  Active
+</Badge>
 ```
 
 ### 4. ProgressBar Component
+
 **Location:** `src/components/ui/ProgressBar.tsx`
 
 Linear and circular progress indicators.
 
 **Features:**
+
 - Linear and circular variants
 - 4 color variants: default, success, warning, error
 - 3 sizes for linear bars
@@ -80,17 +93,20 @@ Linear and circular progress indicators.
 - Smooth animations
 
 **Example:**
+
 ```tsx
 <ProgressBar value={65} showLabel label="Progress" />
 <CircularProgress value={75} size={80} />
 ```
 
 ### 5. BottomNavigation Component
+
 **Location:** `src/components/ui/BottomNavigation.tsx`
 
 Fixed bottom navigation bar with three main sections.
 
 **Features:**
+
 - Fixed positioning at bottom
 - 3 navigation items:
   - Курс (Course) - with BookOpen icon
@@ -102,6 +118,7 @@ Fixed bottom navigation bar with three main sections.
 - Integrated with React Router
 
 **Example:**
+
 ```tsx
 <BottomNavigation />
 ```
@@ -109,11 +126,13 @@ Fixed bottom navigation bar with three main sections.
 ## Pages Implemented
 
 ### 1. HomePage (Курс)
+
 **Location:** `src/pages/HomePage.tsx`
 
 Main course page displaying user progress and quick actions.
 
 **Features:**
+
 - User profile card
 - Progress tracking with progress bars
 - Quick action buttons
@@ -122,22 +141,26 @@ Main course page displaying user progress and quick actions.
 - Telegram WebApp info
 
 ### 2. AchievementsPage (Достижения)
+
 **Location:** `src/pages/AchievementsPage.tsx`
 
 Displays user achievements and statistics.
 
 **Features:**
+
 - Statistics cards (unlocked/total, points, completion %)
 - Achievement list with icons
 - Locked/unlocked states
 - Progress indicators for incomplete achievements
 
 ### 3. ProfilePage (Профиль)
+
 **Location:** `src/pages/ProfilePage.tsx`
 
 User profile and statistics page.
 
 **Features:**
+
 - User avatar and info
 - Level and XP progress
 - Statistics grid (lessons, achievements, hours, progress)
@@ -145,11 +168,13 @@ User profile and statistics page.
 - App information
 
 ### 4. ComponentShowcase
+
 **Location:** `src/pages/ComponentShowcase.tsx`
 
 Comprehensive showcase of all UI components.
 
 **Features:**
+
 - Live examples of all components
 - All variants and sizes demonstrated
 - Interactive controls (e.g., progress slider)
@@ -161,6 +186,7 @@ Comprehensive showcase of all UI components.
 **Location:** `src/utils/designTokens.ts`
 
 Centralized design tokens including:
+
 - Colors (using Telegram CSS variables)
 - Spacing (xs to 2xl)
 - Border radius (sm to full)
@@ -172,7 +198,9 @@ Centralized design tokens including:
 ## Styling Approach
 
 ### Telegram Design Tokens Integration
+
 All components use Telegram design tokens through CSS variables:
+
 ```css
 --tg-theme-bg-color
 --tg-theme-text-color
@@ -183,12 +211,15 @@ All components use Telegram design tokens through CSS variables:
 ```
 
 ### Tailwind CSS
+
 Components use Tailwind utility classes with custom Telegram color classes:
+
 ```tsx
-className="bg-telegram-button text-telegram-button-text"
+className = "bg-telegram-button text-telegram-button-text";
 ```
 
 ### Dark Mode Support
+
 Automatic dark mode support through Telegram theme switching. Colors adapt based on user's Telegram theme.
 
 ## Animations
@@ -200,25 +231,29 @@ All animations use Framer Motion for smooth, performant effects:
 3. **Badge:** Fade in with scale animation
 4. **ProgressBar:** Smooth fill animation (0.5s ease-out)
 5. **CircularProgress:** Circular stroke animation
-6. **BottomNavigation:** 
+6. **BottomNavigation:**
    - Active indicator slide with spring animation
    - Icon scale (1.1) when active
 
 ## Responsive Design
 
 ### Mobile-First Approach
+
 - Components optimized for Telegram's 480px max width
 - Touch-friendly sizes (min 44px tap targets)
 - Flexible layouts
 - Safe area support for notched devices
 
 ### Breakpoints
+
 Using Tailwind's default breakpoints plus custom:
+
 - `telegram: { max: "480px" }` - Telegram-specific breakpoint
 
 ## Accessibility
 
 All components follow accessibility best practices:
+
 - Semantic HTML elements
 - Proper ARIA labels
 - Keyboard navigation
@@ -229,12 +264,15 @@ All components follow accessibility best practices:
 ## Usage in Application
 
 ### Importing Components
+
 ```tsx
 import { Button, Card, Badge, ProgressBar, BottomNavigation } from "@/components/ui";
 ```
 
 ### Layout Integration
+
 BottomNavigation is integrated into BaseLayout:
+
 ```tsx
 <BaseLayout>
   <main>{children}</main>
@@ -243,7 +281,9 @@ BottomNavigation is integrated into BaseLayout:
 ```
 
 ### Routing
+
 All pages are configured in `src/routes/index.tsx`:
+
 - `/` - HomePage (Курс)
 - `/achievements` - AchievementsPage (Достижения)
 - `/profile` - ProfilePage (Профиль)
@@ -252,6 +292,7 @@ All pages are configured in `src/routes/index.tsx`:
 ## Testing
 
 Components can be tested:
+
 1. Visit `/showcase` to see all components in action
 2. Test responsiveness by resizing browser
 3. Toggle dark mode using header button
@@ -310,6 +351,7 @@ src/
 ## Future Enhancements
 
 Potential improvements:
+
 1. Unit tests for all components
 2. Storybook integration (alternative to showcase page)
 3. Additional components (Modal, Dropdown, Input, etc.)
@@ -334,6 +376,7 @@ Potential improvements:
 ## Support
 
 For questions or issues, refer to:
+
 - Component README: `src/components/ui/README.md`
 - Live showcase: Navigate to `/showcase` in the app
 - Design tokens: `src/utils/designTokens.ts`

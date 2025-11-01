@@ -26,19 +26,10 @@ const sizeStyles: Record<BadgeSize, string> = {
 };
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
-  (
-    {
-      variant = "default",
-      size = "md",
-      dot = false,
-      children,
-      className = "",
-      ...props
-    },
-    ref
-  ) => {
-    const baseStyles = "inline-flex items-center gap-1.5 font-medium rounded-full whitespace-nowrap";
-    
+  ({ variant = "default", size = "md", dot = false, children, className = "", ...props }, ref) => {
+    const baseStyles =
+      "inline-flex items-center gap-1.5 font-medium rounded-full whitespace-nowrap";
+
     return (
       <motion.span
         ref={ref}
@@ -48,9 +39,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
         transition={{ duration: 0.2 }}
         {...props}
       >
-        {dot && (
-          <span className="w-1.5 h-1.5 rounded-full bg-current" />
-        )}
+        {dot && <span className="w-1.5 h-1.5 rounded-full bg-current" />}
         {children as React.ReactNode}
       </motion.span>
     );

@@ -2,7 +2,15 @@ import { motion } from "framer-motion";
 import { Flame, Trophy, Target, Zap, User } from "lucide-react";
 import { useProgressSummary } from "../hooks/useProgressSummary";
 import { useActivityHeatmap } from "../hooks/useActivityHeatmap";
-import { Card, CardHeader, CardTitle, CardContent, Badge, ProgressBar, Skeleton } from "../components/ui";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Badge,
+  ProgressBar,
+  Skeleton,
+} from "../components/ui";
 import { ActivityHeatmap } from "../components/ActivityHeatmap";
 
 const DashboardSkeleton = () => (
@@ -24,15 +32,15 @@ const DashboardSkeleton = () => (
   </div>
 );
 
-const HeroHeader = ({ 
-  level, 
-  username, 
-  xp, 
-  progressPercentage, 
-  xpToNextLevel 
-}: { 
-  level: number; 
-  username: string | null; 
+const HeroHeader = ({
+  level,
+  username,
+  xp,
+  progressPercentage,
+  xpToNextLevel,
+}: {
+  level: number;
+  username: string | null;
   xp: number;
   progressPercentage: number;
   xpToNextLevel: number;
@@ -69,9 +77,7 @@ const HeroHeader = ({
             transition={{ delay: 0.4 }}
             className="flex items-center gap-2 mt-1"
           >
-            <Badge className="bg-white/20 text-white border-white/30">
-              Level {level}
-            </Badge>
+            <Badge className="bg-white/20 text-white border-white/30">Level {level}</Badge>
             <span className="text-sm text-white/80">{xp} XP</span>
           </motion.div>
         </div>
@@ -119,9 +125,7 @@ const StatCard = ({
         <Icon className="text-telegram-button mb-2" size={24} />
         <div className="text-2xl font-bold text-telegram-text mb-1">{value}</div>
         <div className="text-xs text-telegram-hint">{label}</div>
-        {subtitle && (
-          <div className="text-xs text-telegram-subtitle mt-1">{subtitle}</div>
-        )}
+        {subtitle && <div className="text-xs text-telegram-subtitle mt-1">{subtitle}</div>}
       </CardContent>
     </Card>
   </motion.div>
@@ -195,12 +199,7 @@ export const DashboardPage = () => {
               value={`${progress.lessons_completed}/${progress.total_lessons}`}
               delay={0.3}
             />
-            <StatCard
-              icon={Zap}
-              label="Total Queries"
-              value={progress.total_queries}
-              delay={0.4}
-            />
+            <StatCard icon={Zap} label="Total Queries" value={progress.total_queries} delay={0.4} />
           </div>
         </section>
 

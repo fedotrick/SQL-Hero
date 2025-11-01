@@ -41,13 +41,10 @@ describe("ActivityHeatmap", () => {
   });
 
   it("should display recent 84 days when more data is provided", () => {
-    const largeMockData: ActivityHeatmapEntry[] = Array.from(
-      { length: 100 },
-      (_, i) => ({
-        date: `2024-01-${String(i + 1).padStart(2, "0")}`,
-        count: Math.floor(Math.random() * 10),
-      })
-    );
+    const largeMockData: ActivityHeatmapEntry[] = Array.from({ length: 100 }, (_, i) => ({
+      date: `2024-01-${String(i + 1).padStart(2, "0")}`,
+      count: Math.floor(Math.random() * 10),
+    }));
 
     const { container } = render(<ActivityHeatmap data={largeMockData} />);
 
@@ -58,7 +55,7 @@ describe("ActivityHeatmap", () => {
   it("should show title on hover with activity count", () => {
     const { container } = render(<ActivityHeatmap data={mockData} />);
 
-    const cells = container.querySelectorAll('[title]');
+    const cells = container.querySelectorAll("[title]");
     const firstCellWithTitle = Array.from(cells).find((cell) =>
       cell.getAttribute("title")?.includes("2024-01-02")
     );

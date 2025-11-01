@@ -3,11 +3,13 @@
 ## Scenario 1: Opening in Telegram (Real Environment)
 
 **Prerequisites:**
+
 - Backend server running at configured API URL
 - Bot created with valid token
 - Mini app configured in BotFather
 
 **Steps:**
+
 1. Open mini app through Telegram bot
 2. Observe loading screen appears briefly
 3. App authenticates automatically
@@ -19,11 +21,12 @@
 ✅ Automatic authentication  
 ✅ User info displayed  
 ✅ Haptics functional  
-✅ No errors in console  
+✅ No errors in console
 
 ## Scenario 2: Opening Outside Telegram
 
 **Steps:**
+
 1. Open app URL directly in browser (not through Telegram)
 2. Observe warning screen
 
@@ -31,14 +34,16 @@
 ✅ Shows "Not Available" warning screen  
 ✅ Explains app must be opened in Telegram  
 ✅ Provides instructions  
-✅ No crash or error  
+✅ No crash or error
 
 ## Scenario 3: Using Mock Mode (Development)
 
 **Prerequisites:**
+
 - Backend server running (or can be mocked)
 
 **Steps:**
+
 1. Open app in browser
 2. See "Not in Telegram" warning
 3. Open browser console
@@ -50,14 +55,16 @@
 ✅ Mock WebApp installed  
 ✅ App authenticates with mock user  
 ✅ Mock user data displayed  
-✅ Haptic calls logged to console  
+✅ Haptic calls logged to console
 
 ## Scenario 4: Authentication Error Handling
 
 **Prerequisites:**
+
 - Backend returns 401 error
 
 **Steps:**
+
 1. Configure backend to reject auth
 2. Open app in Telegram
 3. Observe error screen
@@ -66,14 +73,16 @@
 **Expected Result:**
 ✅ Shows error screen with message  
 ✅ Retry button functional  
-✅ Can attempt authentication again  
+✅ Can attempt authentication again
 
 ## Scenario 5: Network Error Handling
 
 **Prerequisites:**
+
 - Backend is unreachable
 
 **Steps:**
+
 1. Stop backend server
 2. Open app in Telegram (or use mock mode)
 3. Observe error screen
@@ -81,11 +90,12 @@
 **Expected Result:**
 ✅ Shows network error message  
 ✅ Retry button available  
-✅ No app crash  
+✅ No app crash
 
 ## Scenario 6: Session Persistence
 
 **Steps:**
+
 1. Authenticate successfully in Telegram
 2. Refresh the page
 3. Observe app loads without re-authentication
@@ -94,15 +104,17 @@
 ✅ App loads immediately  
 ✅ User still authenticated  
 ✅ No second auth call  
-✅ Token persisted in localStorage  
+✅ Token persisted in localStorage
 
 ## Scenario 7: Haptic Feedback Demo
 
 **Prerequisites:**
+
 - Open in Telegram mobile app
 - Device supports haptics
 
 **Steps:**
+
 1. Navigate to Haptic Feedback Demo section on homepage
 2. Tap "Light" button
 3. Tap "Medium" button
@@ -114,11 +126,12 @@
 **Expected Result:**
 ✅ Each button triggers appropriate haptic feedback  
 ✅ Different intensities felt for impact styles  
-✅ Different patterns for notifications  
+✅ Different patterns for notifications
 
 ## Scenario 8: Telegram WebApp Info Display
 
 **Steps:**
+
 1. Open app in Telegram
 2. Scroll to "Telegram WebApp Info" section
 3. Verify displayed information
@@ -128,11 +141,12 @@
 ✅ Version shown  
 ✅ Color scheme shown (light/dark)  
 ✅ Available: Yes  
-✅ Haptics Available: Yes (on mobile)  
+✅ Haptics Available: Yes (on mobile)
 
 ## Automated Testing Checklist
 
 ### Unit Tests (Future)
+
 - [ ] `telegramService.isAvailable()` returns correct value
 - [ ] `telegramService.getInitData()` returns initData string
 - [ ] `authService.authenticateWithTelegram()` calls correct endpoint
@@ -141,12 +155,14 @@
 - [ ] `telegramHaptics` logs when unavailable
 
 ### Integration Tests (Future)
+
 - [ ] Mock WebApp can be installed/uninstalled
 - [ ] Auth flow works end-to-end with mock
 - [ ] Error states render correctly
 - [ ] Loading states render correctly
 
 ### E2E Tests (Future)
+
 - [ ] Full authentication flow
 - [ ] Navigation after auth
 - [ ] Token persistence across reloads
@@ -156,30 +172,31 @@
 
 ```javascript
 // Check if Telegram WebApp is available
-window.Telegram?.WebApp
+window.Telegram?.WebApp;
 
 // Enable mock for testing
-window.enableMockTelegram()
+window.enableMockTelegram();
 
 // Disable mock
-window.disableMockTelegram()
+window.disableMockTelegram();
 
 // Check auth state
 // (in React DevTools or add window.authStore = useAuthStore in dev)
 
 // Clear stored token
-localStorage.clear()
+localStorage.clear();
 
 // View stored token
-localStorage.getItem('telegram_auth_token')
+localStorage.getItem("telegram_auth_token");
 
 // View stored user
-JSON.parse(localStorage.getItem('telegram_user'))
+JSON.parse(localStorage.getItem("telegram_user"));
 ```
 
 ## Manual QA Checklist
 
 ### Visual
+
 - [ ] Loading spinner centered and animated
 - [ ] Error screen styled correctly
 - [ ] Warning screen styled correctly
@@ -189,6 +206,7 @@ JSON.parse(localStorage.getItem('telegram_user'))
 - [ ] All text readable in dark theme
 
 ### Functional
+
 - [ ] Authentication works in Telegram
 - [ ] Warning shows outside Telegram
 - [ ] Mock mode works for development
@@ -199,6 +217,7 @@ JSON.parse(localStorage.getItem('telegram_user'))
 - [ ] App respects Telegram theme
 
 ### Error Cases
+
 - [ ] Backend unreachable - shows error
 - [ ] Backend returns 401 - shows error
 - [ ] Backend returns 500 - shows error
@@ -207,6 +226,7 @@ JSON.parse(localStorage.getItem('telegram_user'))
 - [ ] No Telegram WebApp - shows warning
 
 ### Performance
+
 - [ ] Loading screen shows immediately
 - [ ] Auth completes in < 2 seconds (with good network)
 - [ ] No unnecessary re-renders
@@ -223,6 +243,7 @@ JSON.parse(localStorage.getItem('telegram_user'))
 ## Browser Compatibility
 
 Tested/Should work in:
+
 - ✅ Chrome/Edge (Chromium)
 - ✅ Safari (iOS)
 - ✅ Firefox
@@ -232,6 +253,7 @@ Tested/Should work in:
 ## Device Testing
 
 Should be tested on:
+
 - [ ] iPhone (Safari, Telegram)
 - [ ] Android (Chrome, Telegram)
 - [ ] Desktop (Chrome, Firefox, Safari)

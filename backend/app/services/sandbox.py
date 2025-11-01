@@ -1,4 +1,3 @@
-import re
 import time
 from abc import ABC, abstractmethod
 from datetime import UTC, datetime, timedelta
@@ -11,6 +10,7 @@ from app.schemas.sandbox import (
     QueryValidationResult,
     SandboxStatus,
 )
+from app.services.query_validator import QueryValidator
 
 
 class Sandbox:
@@ -123,63 +123,6 @@ class IQueryExecutor(ABC):
     @abstractmethod
     async def validate_query(self, query: str) -> QueryValidationResult:
         pass
-
-
-class QueryValidator:
-    def __init__(self, config: SandboxConfig):
-        self.config = config
-        self._compiled_patterns = [
-            re.compile(pattern, re.IGNORECASE) for pattern in config.blocked_patterns
-        ]
-
-    def validate(self, query: str) -> QueryValidationResult:
-        errors: list[str] = []
-        warnings: list[str] = []
-
-        query_stripped = query.strip()
-        if not query_stripped:
-            errors.append("Query cannot be empty")
-            return QueryValidationResult(is_valid=False, errors=errors, warnings=warnings)
-
-        for pattern in self._compiled_patterns:
-            if pattern.search(query):
-                errors.append(f"Query contains blocked pattern: {pattern.pattern}")
-
-        query_upper = query_stripped.upper()
-        detected_type = self._detect_query_type(query_upper)
-
-        if detected_type and detected_type not in self.config.allowed_query_types:
-            errors.append(f"Query type '{detected_type}' is not allowed")
-
-        if query_upper.count("SELECT") > 10:
-            warnings.append("Query contains many SELECT statements, consider simplifying")
-
-        if len(query) > 5000:
-            warnings.append("Query is very long, consider breaking it into smaller parts")
-
-        is_valid = len(errors) == 0
-
-        return QueryValidationResult(
-            is_valid=is_valid,
-            errors=errors,
-            warnings=warnings,
-            query_type=detected_type,
-        )
-
-    def _detect_query_type(self, query_upper: str) -> str | None:
-        query_type_patterns = [
-            ("SELECT", r"^\s*(?:WITH\s+.+\s+AS\s+.+\s+)?SELECT\b"),
-            ("INSERT", r"^\s*INSERT\b"),
-            ("UPDATE", r"^\s*UPDATE\b"),
-            ("DELETE", r"^\s*DELETE\b"),
-            ("WITH", r"^\s*WITH\b"),
-        ]
-
-        for query_type, pattern in query_type_patterns:
-            if re.match(pattern, query_upper):
-                return query_type
-
-        return None
 
 
 class InMemorySandboxManager(ISandboxManager):

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BookOpen, Trophy, User } from "lucide-react";
+import { BookOpen, Trophy, User, Map } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export interface NavigationItem {
@@ -15,8 +15,13 @@ export interface BottomNavigationProps {
 const navigationItems: NavigationItem[] = [
   {
     path: "/",
-    label: "Курс",
+    label: "Главная",
     icon: <BookOpen size={24} />,
+  },
+  {
+    path: "/modules",
+    label: "Модули",
+    icon: <Map size={24} />,
   },
   {
     path: "/achievements",

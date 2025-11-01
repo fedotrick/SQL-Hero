@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.routers import achievements, auth, courses, progress
+from app.routers import achievements, auth, courses, leaderboard, progress
 
 app = FastAPI(title=settings.app_name, version=settings.app_version)
 
@@ -18,6 +18,7 @@ app.include_router(auth.router)
 app.include_router(courses.router)
 app.include_router(progress.router)
 app.include_router(achievements.router)
+app.include_router(leaderboard.router)
 
 
 @app.get("/")

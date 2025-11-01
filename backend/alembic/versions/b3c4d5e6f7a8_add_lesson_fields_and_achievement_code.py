@@ -25,7 +25,9 @@ def upgrade() -> None:
     
     op.execute('UPDATE achievements SET code = CONCAT("achievement_", id) WHERE code IS NULL')
     
-    op.alter_column('achievements', 'code', nullable=False)
+    op.alter_column('achievements', 'code',
+                   existing_type=sa.String(length=50),
+                   nullable=False)
 
 
 def downgrade() -> None:

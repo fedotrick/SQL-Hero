@@ -12,3 +12,5 @@ export type { ProgressBarProps, ProgressBarSize, ProgressBarVariant, CircularPro
 
 export { BottomNavigation } from "./BottomNavigation";
 export type { BottomNavigationProps, NavigationItem } from "./BottomNavigation";
+
+export { Skeleton } from "./Skeleton";

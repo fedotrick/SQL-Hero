@@ -1,5 +1,5 @@
 import { User, Settings, LogOut, BookOpen, Trophy, Clock } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent, Badge, Button, CircularProgress } from "../components/ui";
+import { Card, CardHeader, CardTitle, CardContent, Badge, CircularProgress } from "../components/ui";
 
 export const ProfilePage = () => {
   const userProfile = {

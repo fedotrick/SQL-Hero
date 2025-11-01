@@ -1,5 +1,5 @@
 import { Trophy, Star, Award, Target, Zap } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent, Badge, ProgressBar } from "../components/ui";
+import { Card, CardContent, Badge, ProgressBar } from "../components/ui";
 
 export const AchievementsPage = () => {
   const achievements = [

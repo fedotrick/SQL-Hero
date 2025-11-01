@@ -16,13 +16,13 @@ async def seed_modules(session: AsyncSession) -> dict[int, Module]:
     module_map: dict[int, Module] = {}
 
     for module_data in MODULES_DATA:
-        result = await session.execute(
-            select(Module).where(Module.order == module_data["order"])
-        )
+        result = await session.execute(select(Module).where(Module.order == module_data["order"]))
         existing_module = result.scalar_one_or_none()
 
         if existing_module:
-            print(f"  Module '{module_data['title']}' already exists (order {module_data['order']}), skipping...")
+            print(
+                f"  Module '{module_data['title']}' already exists (order {module_data['order']}), skipping..."
+            )
             module_map[module_data["order"]] = existing_module
         else:
             module = Module(**module_data)
@@ -51,22 +51,22 @@ async def seed_lessons(session: AsyncSession, module_map: dict[int, Module]) -> 
         for lesson_data in module_lessons_data["lessons"]:
             result = await session.execute(
                 select(Lesson).where(
-                    Lesson.module_id == module.id,
-                    Lesson.order == lesson_data["order"]
+                    Lesson.module_id == module.id, Lesson.order == lesson_data["order"]
                 )
             )
             existing_lesson = result.scalar_one_or_none()
 
             if existing_lesson:
-                print(f"  Lesson '{lesson_data['title']}' (module {module_order}, order {lesson_data['order']}) already exists, skipping...")
-            else:
-                lesson = Lesson(
-                    module_id=module.id,
-                    **lesson_data
+                print(
+                    f"  Lesson '{lesson_data['title']}' (module {module_order}, order {lesson_data['order']}) already exists, skipping..."
                 )
+            else:
+                lesson = Lesson(module_id=module.id, **lesson_data)
                 session.add(lesson)
                 total_lessons += 1
-                print(f"  Created lesson '{lesson_data['title']}' (module {module_order}, order {lesson_data['order']})")
+                print(
+                    f"  Created lesson '{lesson_data['title']}' (module {module_order}, order {lesson_data['order']})"
+                )
 
     await session.commit()
     print(f"Lessons seeding completed: {total_lessons} new lessons created")
@@ -83,12 +83,16 @@ async def seed_achievements(session: AsyncSession) -> None:
         existing_achievement = result.scalar_one_or_none()
 
         if existing_achievement:
-            print(f"  Achievement '{achievement_data['title']}' (code: {achievement_data['code']}) already exists, skipping...")
+            print(
+                f"  Achievement '{achievement_data['title']}' (code: {achievement_data['code']}) already exists, skipping..."
+            )
         else:
             achievement = Achievement(**achievement_data)
             session.add(achievement)
             total_achievements += 1
-            print(f"  Created achievement '{achievement_data['title']}' (code: {achievement_data['code']})")
+            print(
+                f"  Created achievement '{achievement_data['title']}' (code: {achievement_data['code']})"
+            )
 
     await session.commit()
     print(f"Achievements seeding completed: {total_achievements} new achievements created")
@@ -129,9 +133,7 @@ async def run_seed() -> dict[str, Any]:
     settings = get_settings()
 
     engine = create_async_engine(settings.database_url, echo=False)
-    async_session = sessionmaker(
-        engine, class_=AsyncSession, expire_on_commit=False
-    )
+    async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
     async with async_session() as session:
         try:

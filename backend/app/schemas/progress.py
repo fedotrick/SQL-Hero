@@ -10,6 +10,16 @@ class LessonAttemptRequest(BaseModel):
     success: bool = Field(..., description="Whether the query matched expected result")
 
 
+class AchievementUnlocked(BaseModel):
+    """Achievement that was just unlocked."""
+
+    achievement_id: int
+    code: str
+    title: str
+    icon: str | None
+    points: int
+
+
 class LessonAttemptResponse(BaseModel):
     """Response after submitting a lesson attempt."""
 
@@ -24,6 +34,7 @@ class LessonAttemptResponse(BaseModel):
     first_try: bool
     progress_status: str
     message: str
+    achievements_unlocked: list[AchievementUnlocked] = []
 
 
 class UserProgressSummary(BaseModel):

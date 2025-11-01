@@ -1,4 +1,3 @@
-
 from app.models.database import AchievementType
 
 MODULES_DATA = [
@@ -75,10 +74,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT * FROM users;",
                 "expected_result": {
                     "columns": ["id", "name", "email"],
-                    "rows": [
-                        [1, "Иван", "ivan@example.com"],
-                        [2, "Мария", "maria@example.com"]
-                    ]
+                    "rows": [[1, "Иван", "ivan@example.com"], [2, "Мария", "maria@example.com"]],
                 },
                 "order": 1,
                 "estimated_duration": 15,
@@ -91,10 +87,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT name, email FROM users;",
                 "expected_result": {
                     "columns": ["name", "email"],
-                    "rows": [
-                        ["Иван", "ivan@example.com"],
-                        ["Мария", "maria@example.com"]
-                    ]
+                    "rows": [["Иван", "ivan@example.com"], ["Мария", "maria@example.com"]],
                 },
                 "order": 2,
                 "estimated_duration": 10,
@@ -107,10 +100,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT name AS имя, email AS почта FROM users;",
                 "expected_result": {
                     "columns": ["имя", "почта"],
-                    "rows": [
-                        ["Иван", "ivan@example.com"],
-                        ["Мария", "maria@example.com"]
-                    ]
+                    "rows": [["Иван", "ivan@example.com"], ["Мария", "maria@example.com"]],
                 },
                 "order": 3,
                 "estimated_duration": 12,
@@ -128,7 +118,7 @@ LESSONS_DATA = [
                 "sql_solution": "CREATE TABLE products (id INT PRIMARY KEY, name VARCHAR(100), price DECIMAL(10, 2));",
                 "expected_result": {
                     "message": "Таблица products успешно создана",
-                    "columns": ["id", "name", "price"]
+                    "columns": ["id", "name", "price"],
                 },
                 "order": 1,
                 "estimated_duration": 20,
@@ -141,7 +131,7 @@ LESSONS_DATA = [
                 "sql_solution": "ALTER TABLE products ADD description TEXT;",
                 "expected_result": {
                     "message": "Столбец description добавлен в таблицу products",
-                    "columns": ["id", "name", "price", "description"]
+                    "columns": ["id", "name", "price", "description"],
                 },
                 "order": 2,
                 "estimated_duration": 15,
@@ -159,10 +149,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT * FROM products WHERE price > 100;",
                 "expected_result": {
                     "columns": ["id", "name", "price"],
-                    "rows": [
-                        [1, "Ноутбук", 50000],
-                        [2, "Смартфон", 30000]
-                    ]
+                    "rows": [[1, "Ноутбук", 50000], [2, "Смартфон", 30000]],
                 },
                 "order": 1,
                 "estimated_duration": 18,
@@ -175,11 +162,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT * FROM products ORDER BY price DESC;",
                 "expected_result": {
                     "columns": ["id", "name", "price"],
-                    "rows": [
-                        [1, "Ноутбук", 50000],
-                        [2, "Смартфон", 30000],
-                        [3, "Мышь", 500]
-                    ]
+                    "rows": [[1, "Ноутбук", 50000], [2, "Смартфон", 30000], [3, "Мышь", 500]],
                 },
                 "order": 2,
                 "estimated_duration": 15,
@@ -197,8 +180,8 @@ LESSONS_DATA = [
                         [2, "Смартфон", 30000],
                         [3, "Планшет", 25000],
                         [4, "Монитор", 15000],
-                        [5, "Клавиатура", 2000]
-                    ]
+                        [5, "Клавиатура", 2000],
+                    ],
                 },
                 "order": 3,
                 "estimated_duration": 12,
@@ -214,10 +197,7 @@ LESSONS_DATA = [
                 "content": "Подсчитывайте количество записей с помощью агрегатной функции COUNT.",
                 "theory": "COUNT возвращает количество строк.\n\nСинтаксис: SELECT COUNT(*) FROM table_name;\n\nCOUNT(column_name) не учитывает NULL значения.",
                 "sql_solution": "SELECT COUNT(*) as total FROM products;",
-                "expected_result": {
-                    "columns": ["total"],
-                    "rows": [[50]]
-                },
+                "expected_result": {"columns": ["total"], "rows": [[50]]},
                 "order": 1,
                 "estimated_duration": 15,
                 "is_published": True,
@@ -229,7 +209,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT SUM(price) as total_price, AVG(price) as avg_price FROM products;",
                 "expected_result": {
                     "columns": ["total_price", "avg_price"],
-                    "rows": [[500000, 10000]]
+                    "rows": [[500000, 10000]],
                 },
                 "order": 2,
                 "estimated_duration": 15,
@@ -247,10 +227,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT orders.id, users.name, orders.total FROM orders INNER JOIN users ON orders.user_id = users.id;",
                 "expected_result": {
                     "columns": ["id", "name", "total"],
-                    "rows": [
-                        [1, "Иван", 5000],
-                        [2, "Мария", 3000]
-                    ]
+                    "rows": [[1, "Иван", 5000], [2, "Мария", 3000]],
                 },
                 "order": 1,
                 "estimated_duration": 20,
@@ -263,11 +240,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT users.name, orders.total FROM users LEFT JOIN orders ON users.id = orders.user_id;",
                 "expected_result": {
                     "columns": ["name", "total"],
-                    "rows": [
-                        ["Иван", 5000],
-                        ["Мария", None],
-                        ["Петр", 3000]
-                    ]
+                    "rows": [["Иван", 5000], ["Мария", None], ["Петр", 3000]],
                 },
                 "order": 2,
                 "estimated_duration": 20,
@@ -280,10 +253,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT users.name, orders.id, products.name FROM users JOIN orders ON users.id = orders.user_id JOIN order_items ON orders.id = order_items.order_id JOIN products ON order_items.product_id = products.id;",
                 "expected_result": {
                     "columns": ["name", "id", "name"],
-                    "rows": [
-                        ["Иван", 1, "Ноутбук"],
-                        ["Иван", 1, "Мышь"]
-                    ]
+                    "rows": [["Иван", 1, "Ноутбук"], ["Иван", 1, "Мышь"]],
                 },
                 "order": 3,
                 "estimated_duration": 25,
@@ -301,10 +271,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT * FROM products WHERE category_id IN (SELECT id FROM categories WHERE name = 'Электроника');",
                 "expected_result": {
                     "columns": ["id", "name", "price", "category_id"],
-                    "rows": [
-                        [1, "Ноутбук", 50000, 1],
-                        [2, "Смартфон", 30000, 1]
-                    ]
+                    "rows": [[1, "Ноутбук", 50000, 1], [2, "Смартфон", 30000, 1]],
                 },
                 "order": 1,
                 "estimated_duration": 20,
@@ -317,10 +284,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT name, (SELECT COUNT(*) FROM orders WHERE user_id = users.id) as order_count FROM users;",
                 "expected_result": {
                     "columns": ["name", "order_count"],
-                    "rows": [
-                        ["Иван", 5],
-                        ["Мария", 3]
-                    ]
+                    "rows": [["Иван", 5], ["Мария", 3]],
                 },
                 "order": 2,
                 "estimated_duration": 20,
@@ -336,9 +300,7 @@ LESSONS_DATA = [
                 "content": "Ускорьте выполнение запросов с помощью индексов.",
                 "theory": "Индексы ускоряют поиск данных в таблице.\n\nСинтаксис: CREATE INDEX index_name ON table_name (column_name);\n\nИндексы занимают дополнительное место и замедляют INSERT/UPDATE.",
                 "sql_solution": "CREATE INDEX idx_users_email ON users(email);",
-                "expected_result": {
-                    "message": "Индекс idx_users_email успешно создан"
-                },
+                "expected_result": {"message": "Индекс idx_users_email успешно создан"},
                 "order": 1,
                 "estimated_duration": 18,
                 "is_published": True,
@@ -351,7 +313,7 @@ LESSONS_DATA = [
                 "expected_result": {
                     "plan": "Using index idx_users_email",
                     "type": "ref",
-                    "rows": 1
+                    "rows": 1,
                 },
                 "order": 2,
                 "estimated_duration": 20,
@@ -362,13 +324,7 @@ LESSONS_DATA = [
                 "content": "Научитесь оптимизировать медленные SQL запросы.",
                 "theory": "Основные способы оптимизации:\n- Использование индексов\n- Избегание SELECT *\n- Правильное использование JOIN\n- Оптимизация WHERE условий",
                 "sql_solution": "SELECT id, name FROM users WHERE id IN (1, 2, 3) AND is_active = 1;",
-                "expected_result": {
-                    "columns": ["id", "name"],
-                    "rows": [
-                        [1, "Иван"],
-                        [2, "Мария"]
-                    ]
-                },
+                "expected_result": {"columns": ["id", "name"], "rows": [[1, "Иван"], [2, "Мария"]]},
                 "order": 3,
                 "estimated_duration": 25,
                 "is_published": True,
@@ -383,10 +339,7 @@ LESSONS_DATA = [
                 "content": "Управляйте транзакциями для обеспечения целостности данных.",
                 "theory": "Транзакция - это последовательность операций, выполняемых как единое целое.\n\nКоманды: BEGIN, COMMIT, ROLLBACK\n\nСвойства ACID: Atomicity, Consistency, Isolation, Durability",
                 "sql_solution": "BEGIN; UPDATE accounts SET balance = balance - 100 WHERE id = 1; UPDATE accounts SET balance = balance + 100 WHERE id = 2; COMMIT;",
-                "expected_result": {
-                    "message": "Транзакция успешно выполнена",
-                    "affected_rows": 2
-                },
+                "expected_result": {"message": "Транзакция успешно выполнена", "affected_rows": 2},
                 "order": 1,
                 "estimated_duration": 22,
                 "is_published": True,
@@ -396,10 +349,7 @@ LESSONS_DATA = [
                 "content": "Используйте ROLLBACK для отмены изменений при ошибке.",
                 "theory": "ROLLBACK отменяет все изменения, сделанные в текущей транзакции.\n\nПример: BEGIN; ... операции ...; ROLLBACK;\n\nПолезно при обработке ошибок.",
                 "sql_solution": "BEGIN; UPDATE products SET stock = stock - 1 WHERE id = 1; ROLLBACK;",
-                "expected_result": {
-                    "message": "Транзакция отменена",
-                    "changes_reverted": True
-                },
+                "expected_result": {"message": "Транзакция отменена", "changes_reverted": True},
                 "order": 2,
                 "estimated_duration": 18,
                 "is_published": True,
@@ -414,9 +364,7 @@ LESSONS_DATA = [
                 "content": "Создавайте пользовательские функции для многократного использования.",
                 "theory": "Функции позволяют инкапсулировать логику и использовать её повторно.\n\nСинтаксис: CREATE FUNCTION function_name(parameters) RETURNS return_type BEGIN ... END;",
                 "sql_solution": "CREATE FUNCTION calculate_discount(price DECIMAL(10,2)) RETURNS DECIMAL(10,2) BEGIN RETURN price * 0.9; END;",
-                "expected_result": {
-                    "message": "Функция calculate_discount успешно создана"
-                },
+                "expected_result": {"message": "Функция calculate_discount успешно создана"},
                 "order": 1,
                 "estimated_duration": 25,
                 "is_published": True,
@@ -426,9 +374,7 @@ LESSONS_DATA = [
                 "content": "Автоматизируйте действия с помощью триггеров.",
                 "theory": "Триггер - это код, который автоматически выполняется при определенных событиях.\n\nСобытия: INSERT, UPDATE, DELETE\n\nМоменты: BEFORE, AFTER",
                 "sql_solution": "CREATE TRIGGER update_timestamp BEFORE UPDATE ON users FOR EACH ROW SET NEW.updated_at = NOW();",
-                "expected_result": {
-                    "message": "Триггер update_timestamp успешно создан"
-                },
+                "expected_result": {"message": "Триггер update_timestamp успешно создан"},
                 "order": 2,
                 "estimated_duration": 25,
                 "is_published": True,
@@ -445,11 +391,7 @@ LESSONS_DATA = [
                 "sql_solution": "SELECT name, salary, RANK() OVER (ORDER BY salary DESC) as salary_rank FROM employees;",
                 "expected_result": {
                     "columns": ["name", "salary", "salary_rank"],
-                    "rows": [
-                        ["Иван", 100000, 1],
-                        ["Мария", 95000, 2],
-                        ["Петр", 90000, 3]
-                    ]
+                    "rows": [["Иван", 100000, 1], ["Мария", 95000, 2], ["Петр", 90000, 3]],
                 },
                 "order": 1,
                 "estimated_duration": 30,
@@ -462,10 +404,7 @@ LESSONS_DATA = [
                 "sql_solution": "WITH top_products AS (SELECT * FROM products ORDER BY sales DESC LIMIT 10) SELECT * FROM top_products WHERE price > 1000;",
                 "expected_result": {
                     "columns": ["id", "name", "price", "sales"],
-                    "rows": [
-                        [1, "Ноутбук", 50000, 500],
-                        [2, "Смартфон", 30000, 800]
-                    ]
+                    "rows": [[1, "Ноутбук", 50000, 500], [2, "Смартфон", 30000, 800]],
                 },
                 "order": 2,
                 "estimated_duration": 28,
@@ -478,11 +417,7 @@ LESSONS_DATA = [
                 "sql_solution": "WITH RECURSIVE category_tree AS (SELECT id, name, parent_id FROM categories WHERE parent_id IS NULL UNION ALL SELECT c.id, c.name, c.parent_id FROM categories c JOIN category_tree ct ON c.parent_id = ct.id) SELECT * FROM category_tree;",
                 "expected_result": {
                     "columns": ["id", "name", "parent_id"],
-                    "rows": [
-                        [1, "Электроника", None],
-                        [2, "Компьютеры", 1],
-                        [3, "Ноутбуки", 2]
-                    ]
+                    "rows": [[1, "Электроника", None], [2, "Компьютеры", 1], [3, "Ноутбуки", 2]],
                 },
                 "order": 3,
                 "estimated_duration": 35,

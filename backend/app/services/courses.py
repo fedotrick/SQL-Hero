@@ -104,9 +104,7 @@ async def get_module_detail_with_progress(
     if prev_modules:
         # Берём последний предыдущий модуль
         prev_module = prev_modules[-1]
-        prev_lessons_count = len(
-            [lesson for lesson in prev_module.lessons if lesson.is_published]
-        )
+        prev_lessons_count = len([lesson for lesson in prev_module.lessons if lesson.is_published])
         prev_completed = sum(
             1
             for lesson in prev_module.lessons
@@ -197,8 +195,7 @@ async def get_lesson_detail_with_progress(
         prev_lesson = prev_lessons[-1]
         prev_lesson_progress = prev_progress_map.get(prev_lesson.id)
         lesson.is_locked = (  # type: ignore
-            not prev_lesson_progress
-            or prev_lesson_progress.status != ProgressStatus.COMPLETED
+            not prev_lesson_progress or prev_lesson_progress.status != ProgressStatus.COMPLETED
         )
     else:
         # Первый урок модуля - проверяем, разблокирован ли модуль

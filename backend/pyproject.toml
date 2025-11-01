@@ -16,6 +16,7 @@ alembic = "^1.13.0"
 pydantic-settings = "^2.0.0"
 python-dotenv = "^1.0.0"
 pyjwt = "^2.8.0"
+cryptography = "^46.0.3"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.14.3"

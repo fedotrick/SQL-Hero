@@ -4,10 +4,11 @@ import { forwardRef } from "react";
 export type BadgeVariant = "default" | "success" | "warning" | "error" | "info" | "outline";
 export type BadgeSize = "sm" | "md" | "lg";
 
-export interface BadgeProps extends Omit<HTMLMotionProps<"span">, "size"> {
+export interface BadgeProps extends Omit<HTMLMotionProps<"span">, "size" | "children"> {
   variant?: BadgeVariant;
   size?: BadgeSize;
   dot?: boolean;
+  children?: React.ReactNode;
 }
 
 const variantStyles: Record<BadgeVariant, string> = {

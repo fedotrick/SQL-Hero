@@ -5,6 +5,8 @@ import { HomePage } from "../pages/HomePage";
 import { AchievementsPage } from "../pages/AchievementsPage";
 import { ProfilePage } from "../pages/ProfilePage";
 import { ComponentShowcase } from "../pages/ComponentShowcase";
+import { ModulesMapPage } from "../pages/ModulesMapPage";
+import { LessonsListPage } from "../pages/LessonsListPage";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +22,22 @@ export const router = createBrowserRouter([
     element: (
       <BaseLayout>
         <HomePage />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: "/modules",
+    element: (
+      <BaseLayout>
+        <ModulesMapPage />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: "/modules/:moduleId/lessons",
+    element: (
+      <BaseLayout>
+        <LessonsListPage />
       </BaseLayout>
     ),
   },

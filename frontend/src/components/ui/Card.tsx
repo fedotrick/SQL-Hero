@@ -1,4 +1,4 @@
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { forwardRef } from "react";
 
 export type CardVariant = "default" | "elevated" | "outlined";

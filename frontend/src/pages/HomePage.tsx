@@ -93,7 +93,9 @@ export const HomePage = () => {
         <section>
           <h2 className="text-xl font-semibold text-telegram-text mb-4">Быстрые действия</h2>
           <div className="grid grid-cols-2 gap-3">
-            <Button fullWidth>Продолжить урок</Button>
+            <Link to="/modules">
+              <Button fullWidth>Карта модулей</Button>
+            </Link>
             <Button variant="secondary" fullWidth>
               Повторить
             </Button>

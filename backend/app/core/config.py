@@ -32,9 +32,7 @@ class Settings(BaseSettings):
     )
 
     sandbox_enabled: bool = Field(default=False, description="Enable sandbox mode")
-    sandbox_api_url: str = Field(
-        default="http://localhost:8080", description="Sandbox API URL"
-    )
+    sandbox_api_url: str = Field(default="http://localhost:8080", description="Sandbox API URL")
 
 
 settings = Settings()

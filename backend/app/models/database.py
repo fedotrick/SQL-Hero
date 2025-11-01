@@ -174,7 +174,9 @@ class UserAchievement(Base):
     earned_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
 
     user: Mapped["User"] = relationship("User", back_populates="user_achievements")
-    achievement: Mapped["Achievement"] = relationship("Achievement", back_populates="user_achievements")
+    achievement: Mapped["Achievement"] = relationship(
+        "Achievement", back_populates="user_achievements"
+    )
 
     __table_args__ = (
         UniqueConstraint("user_id", "achievement_id", name="uq_user_achievement"),
@@ -203,7 +205,9 @@ class ActivityLog(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
-    activity_type: Mapped[ActivityType] = mapped_column(Enum(ActivityType), nullable=False, index=True)
+    activity_type: Mapped[ActivityType] = mapped_column(
+        Enum(ActivityType), nullable=False, index=True
+    )
     entity_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     entity_type: Mapped[str | None] = mapped_column(String(50), nullable=True)
     details: Mapped[str | None] = mapped_column(Text, nullable=True)

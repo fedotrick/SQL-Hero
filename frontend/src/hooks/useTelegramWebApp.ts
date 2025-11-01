@@ -1,29 +1,7 @@
 import { useEffect } from "react";
+import type { TelegramWebApp } from "../types/telegram";
 
-interface TelegramWebApp {
-  ready: () => void;
-  expand: () => void;
-  themeParams: {
-    bg_color?: string;
-    text_color?: string;
-    hint_color?: string;
-    link_color?: string;
-    button_color?: string;
-    button_text_color?: string;
-    secondary_bg_color?: string;
-  };
-  colorScheme: "light" | "dark";
-}
-
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp: TelegramWebApp;
-    };
-  }
-}
-
-export const useTelegramWebApp = () => {
+export const useTelegramWebApp = (): TelegramWebApp | undefined => {
   useEffect(() => {
     if (window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp;

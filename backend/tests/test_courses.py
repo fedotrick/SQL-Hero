@@ -393,6 +393,7 @@ async def test_get_lesson_detail(
     assert data["estimated_duration"] == 15
     assert data["is_locked"] is False
     assert data["progress_status"] is None
+    assert data["attempts"] == 0
 
 
 async def test_get_lesson_detail_not_found(authenticated_client: httpx.AsyncClient):
@@ -441,6 +442,7 @@ async def test_get_lesson_detail_with_progress(
     data = response.json()
     assert data["progress_status"] == "in_progress"
     assert data["is_locked"] is False
+    assert data["attempts"] == 2
 
 
 async def test_lesson_unlocking_sequence(

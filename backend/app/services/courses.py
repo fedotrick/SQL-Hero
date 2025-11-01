@@ -166,6 +166,7 @@ async def get_lesson_detail_with_progress(
     progress = progress_result.scalar_one_or_none()
 
     lesson.progress_status = progress.status.value if progress else None  # type: ignore
+    lesson.attempts = progress.attempts if progress else 0  # type: ignore
 
     # Определение, заблокирован ли урок
     # Получение всех уроков модуля до текущего

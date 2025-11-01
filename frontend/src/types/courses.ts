@@ -52,6 +52,7 @@ export interface LessonDetail {
   is_published: boolean;
   is_locked: boolean;
   progress_status: string | null;
+  attempts: number;
   created_at: string;
   updated_at: string;
 }

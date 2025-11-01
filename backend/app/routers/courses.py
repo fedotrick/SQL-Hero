@@ -165,6 +165,7 @@ async def get_lesson(
         is_published=lesson.is_published,
         is_locked=lesson.is_locked,  # type: ignore
         progress_status=lesson.progress_status,  # type: ignore
+        attempts=lesson.attempts,  # type: ignore
         created_at=lesson.created_at,
         updated_at=lesson.updated_at,
     )

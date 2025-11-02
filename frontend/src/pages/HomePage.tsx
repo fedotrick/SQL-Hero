@@ -119,6 +119,16 @@ export const HomePage = () => {
                 Рейтинг
               </Button>
             </Link>
+            <Link to="/stats">
+              <Button variant="secondary" fullWidth>
+                Статистика
+              </Button>
+            </Link>
+            <Link to="/profile">
+              <Button variant="outline" fullWidth>
+                Профиль
+              </Button>
+            </Link>
           </div>
         </section>
 

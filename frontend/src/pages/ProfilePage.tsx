@@ -1,4 +1,6 @@
-import { User, Settings, LogOut, BookOpen, Trophy, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
+import { User, Settings, LogOut, BookOpen, Trophy, Clock, Activity, Flame } from "lucide-react";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -6,16 +8,23 @@ import {
   CardContent,
   Badge,
   CircularProgress,
+  StreakCalendar,
+  Button,
+  Skeleton,
 } from "../components/ui";
+import { activityService } from "../services";
+import { ActivityCalendarResponse } from "../types/activity";
 
 export const ProfilePage = () => {
+  const [calendarData, setCalendarData] = useState<ActivityCalendarResponse | null>(null);
+  const [isLoadingActivity, setIsLoadingActivity] = useState(true);
+
   const userProfile = {
     name: "Иван Иванов",
     username: "@ivanov",
     level: 5,
     xp: 2750,
     xpToNextLevel: 3000,
-    streak: 12,
     totalLessons: 45,
     completedLessons: 38,
     hoursLearned: 24,
@@ -23,6 +32,22 @@ export const ProfilePage = () => {
   };
 
   const xpProgress = (userProfile.xp / userProfile.xpToNextLevel) * 100;
+
+  useEffect(() => {
+    const fetchActivityData = async () => {
+      try {
+        setIsLoadingActivity(true);
+        const data = await activityService.getCalendarData();
+        setCalendarData(data);
+      } catch (err) {
+        console.error("Failed to fetch activity data:", err);
+      } finally {
+        setIsLoadingActivity(false);
+      }
+    };
+
+    fetchActivityData();
+  }, []);
 
   return (
     <div className="min-h-screen bg-telegram-bg pb-20">
@@ -116,6 +141,64 @@ export const ProfilePage = () => {
               </CardContent>
             </Card>
           </div>
+        </section>
+
+        {/* Activity Streak Calendar */}
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold text-telegram-text">Календарь активности</h2>
+            <Link to="/stats">
+              <Button size="sm" variant="outline">
+                Подробнее
+              </Button>
+            </Link>
+          </div>
+
+          {isLoadingActivity ? (
+            <Card>
+              <CardContent className="p-6">
+                <Skeleton className="h-40 w-full" />
+              </CardContent>
+            </Card>
+          ) : calendarData ? (
+            <>
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <Card>
+                  <CardContent className="p-4 text-center">
+                    <Flame className="mx-auto mb-2 text-orange-500" size={24} />
+                    <div className="text-xl font-bold text-telegram-text">
+                      {calendarData.streak.current_streak}
+                    </div>
+                    <div className="text-xs text-telegram-subtitle mt-1">Текущая серия</div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-4 text-center">
+                    <Activity className="mx-auto mb-2 text-telegram-button" size={24} />
+                    <div className="text-xl font-bold text-telegram-text">
+                      {calendarData.streak.total_active_days}
+                    </div>
+                    <div className="text-xs text-telegram-subtitle mt-1">Активных дней</div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card>
+                <CardContent className="p-4">
+                  <StreakCalendar
+                    data={calendarData.heatmap.data}
+                    startDate={calendarData.heatmap.start_date}
+                    endDate={calendarData.heatmap.end_date}
+                    currentStreak={calendarData.streak.current_streak}
+                    longestStreak={calendarData.streak.longest_streak}
+                    showLegend={true}
+                    animateNewStreak={false}
+                  />
+                </CardContent>
+              </Card>
+            </>
+          ) : null}
         </section>
 
         <section>

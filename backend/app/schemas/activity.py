@@ -25,9 +25,7 @@ class DailyActivityStats(BaseModel):
 
     date: str = Field(..., description="Date in YYYY-MM-DD format")
     total_count: int = Field(..., description="Total activities for the day", ge=0)
-    activity_by_type: dict[str, int] = Field(
-        ..., description="Activity counts grouped by type"
-    )
+    activity_by_type: dict[str, int] = Field(..., description="Activity counts grouped by type")
 
 
 class StreakData(BaseModel):
@@ -36,9 +34,7 @@ class StreakData(BaseModel):
     current_streak: int = Field(..., description="Current consecutive days streak", ge=0)
     longest_streak: int = Field(..., description="Longest streak ever achieved", ge=0)
     total_active_days: int = Field(..., description="Total number of active days", ge=0)
-    last_active_date: str | None = Field(
-        None, description="Last activity date (YYYY-MM-DD)"
-    )
+    last_active_date: str | None = Field(None, description="Last activity date (YYYY-MM-DD)")
     streak_start_date: str | None = Field(
         None, description="Start date of current streak (YYYY-MM-DD)"
     )

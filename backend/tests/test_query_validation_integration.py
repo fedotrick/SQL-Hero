@@ -68,9 +68,7 @@ class TestExecutorPreCheck:
         error_message = str(exc_info.value).lower()
         assert "invalid query" in error_message or "blocked" in error_message
 
-    async def test_system_schema_access_rejected(
-        self, sandbox_service: SandboxService
-    ) -> None:
+    async def test_system_schema_access_rejected(self, sandbox_service: SandboxService) -> None:
         """System schema access should be rejected."""
         sandbox = await sandbox_service.create_sandbox(user_id=1, lesson_id=1)
 
@@ -81,9 +79,7 @@ class TestExecutorPreCheck:
 
         assert "invalid query" in str(exc_info.value).lower()
 
-    async def test_sql_injection_attempt_rejected(
-        self, sandbox_service: SandboxService
-    ) -> None:
+    async def test_sql_injection_attempt_rejected(self, sandbox_service: SandboxService) -> None:
         """SQL injection attempts should be rejected."""
         sandbox = await sandbox_service.create_sandbox(user_id=1, lesson_id=1)
 
@@ -110,16 +106,12 @@ class TestClearErrorMessages:
         # Should mention what's blocked
         assert "DROP" in error_msg or "blocked" in error_msg.lower()
 
-    async def test_system_schema_clear_message(
-        self, sandbox_service: SandboxService
-    ) -> None:
+    async def test_system_schema_clear_message(self, sandbox_service: SandboxService) -> None:
         """System schema access should have clear error message."""
         sandbox = await sandbox_service.create_sandbox(user_id=1, lesson_id=1)
 
         with pytest.raises(ValueError) as exc_info:
-            await sandbox_service.execute_query(
-                sandbox.sandbox_id, "SELECT * FROM mysql.user"
-            )
+            await sandbox_service.execute_query(sandbox.sandbox_id, "SELECT * FROM mysql.user")
 
         error_msg = str(exc_info.value)
         assert "mysql" in error_msg.lower() or "system" in error_msg.lower()
@@ -329,9 +321,7 @@ class TestBlockedExamplesPerModule:
 
             for query in blocked:
                 result = validator.validate(query, lesson_id=lesson_id)
-                assert result.is_valid is False, (
-                    f"Lesson {lesson_id} should block: {query}"
-                )
+                assert result.is_valid is False, f"Lesson {lesson_id} should block: {query}"
 
     def test_all_modules_block_system_schemas(self, sandbox_config: SandboxConfig) -> None:
         """All modules should block system schema access."""
@@ -350,9 +340,7 @@ class TestBlockedExamplesPerModule:
 
             for query in blocked_queries:
                 result = validator.validate(query, lesson_id=lesson_id)
-                assert result.is_valid is False, (
-                    f"Lesson {lesson_id} should block: {query}"
-                )
+                assert result.is_valid is False, f"Lesson {lesson_id} should block: {query}"
 
 
 class TestValidatorIntegrationWithMockExecutor:
@@ -376,9 +364,7 @@ class TestValidatorIntegrationWithMockExecutor:
 
         assert "invalid query" in str(exc_info.value).lower()
 
-    async def test_validator_called_before_execution(
-        self, sandbox_config: SandboxConfig
-    ) -> None:
+    async def test_validator_called_before_execution(self, sandbox_config: SandboxConfig) -> None:
         """Validation should happen before any execution logic."""
         executor = MockQueryExecutor(sandbox_config)
 

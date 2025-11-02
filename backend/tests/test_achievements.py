@@ -50,6 +50,7 @@ async def db_session(engine):
 async def test_user(db_session: AsyncSession):
     """Create a test user."""
     import random
+
     user = User(
         telegram_id=random.randint(100000000, 999999999),
         username="testuser",
@@ -89,7 +90,7 @@ async def test_lessons(db_session: AsyncSession, test_module: Module):
     for i in range(15):
         lesson = Lesson(
             module_id=test_module.id,
-            title=f"Lesson {i+1}",
+            title=f"Lesson {i + 1}",
             content="Test content",
             order=i + 1,
             estimated_duration=20,
@@ -97,7 +98,7 @@ async def test_lessons(db_session: AsyncSession, test_module: Module):
         )
         db_session.add(lesson)
         lessons.append(lesson)
-    
+
     await db_session.commit()
     for lesson in lessons:
         await db_session.refresh(lesson)
@@ -192,13 +193,13 @@ async def test_achievements(engine):
                 "criteria": "Complete lesson between 00:00 and 06:00",
             },
         ]
-        
+
         achievements = []
         for data in achievements_data:
             achievement = Achievement(**data)
             db_session.add(achievement)
             achievements.append(achievement)
-        
+
         await db_session.commit()
         for achievement in achievements:
             await db_session.refresh(achievement)
@@ -226,16 +227,16 @@ async def test_first_lesson_achievement(
     )
     db_session.add(progress)
     await db_session.commit()
-    
+
     # Evaluate achievements
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that first_lesson was unlocked
     assert len(newly_unlocked) == 2  # first_lesson and perfect_score
     codes = {a.achievement_code for a in newly_unlocked}
     assert "first_lesson" in codes
     assert "perfect_score" in codes
-    
+
     # Verify in database
     query = select(UserAchievement).where(UserAchievement.user_id == test_user.id)
     result = await db_session.execute(query)
@@ -265,10 +266,10 @@ async def test_ten_lessons_achievement(
         )
         db_session.add(progress)
     await db_session.commit()
-    
+
     # Evaluate achievements
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that ten_lessons was unlocked
     codes = {a.achievement_code for a in newly_unlocked}
     assert "ten_lessons" in codes
@@ -298,10 +299,10 @@ async def test_module_complete_achievement(
         )
         db_session.add(progress)
     await db_session.commit()
-    
+
     # Evaluate achievements
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that module_1_complete was unlocked
     codes = {a.achievement_code for a in newly_unlocked}
     assert "module_1_complete" in codes
@@ -317,22 +318,22 @@ async def test_streak_achievements(
     # Set 7-day streak
     test_user.current_streak = 7
     await db_session.commit()
-    
+
     # Evaluate achievements
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that streak_7 was unlocked
     codes = {a.achievement_code for a in newly_unlocked}
     assert "streak_7" in codes
     assert "streak_30" not in codes
-    
+
     # Now set 30-day streak
     test_user.current_streak = 30
     await db_session.commit()
-    
+
     # Evaluate achievements again
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that streak_30 was unlocked
     codes = {a.achievement_code for a in newly_unlocked}
     assert "streak_30" in codes
@@ -348,10 +349,10 @@ async def test_challenge_master_achievement(
     # Set total queries
     test_user.total_queries = 50
     await db_session.commit()
-    
+
     # Evaluate achievements
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that challenge_master was unlocked
     codes = {a.achievement_code for a in newly_unlocked}
     assert "challenge_master" in codes
@@ -378,10 +379,10 @@ async def test_perfect_score_achievement(
     )
     db_session.add(progress)
     await db_session.commit()
-    
+
     # Evaluate achievements
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that perfect_score was unlocked
     codes = {a.achievement_code for a in newly_unlocked}
     assert "perfect_score" in codes
@@ -398,7 +399,7 @@ async def test_speed_runner_achievement(
     # Complete lesson in 10 minutes (estimated is 20)
     started_at = datetime.utcnow()
     completed_at = started_at + timedelta(minutes=10)
-    
+
     progress = UserProgress(
         user_id=test_user.id,
         lesson_id=test_lessons[0].id,
@@ -411,10 +412,10 @@ async def test_speed_runner_achievement(
     )
     db_session.add(progress)
     await db_session.commit()
-    
+
     # Evaluate achievements
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that speed_runner was unlocked
     codes = {a.achievement_code for a in newly_unlocked}
     assert "speed_runner" in codes
@@ -430,7 +431,7 @@ async def test_night_owl_achievement(
     """Test that night_owl is unlocked when completing lesson between 00:00 and 06:00."""
     # Complete lesson at 2 AM
     completed_at = datetime.utcnow().replace(hour=2, minute=0, second=0)
-    
+
     progress = UserProgress(
         user_id=test_user.id,
         lesson_id=test_lessons[0].id,
@@ -443,10 +444,10 @@ async def test_night_owl_achievement(
     )
     db_session.add(progress)
     await db_session.commit()
-    
+
     # Evaluate achievements
     newly_unlocked = await evaluate_achievements(db_session, test_user)
-    
+
     # Check that night_owl was unlocked
     codes = {a.achievement_code for a in newly_unlocked}
     assert "night_owl" in codes
@@ -473,11 +474,11 @@ async def test_achievement_only_unlocked_once(
     )
     db_session.add(progress)
     await db_session.commit()
-    
+
     # First evaluation
     newly_unlocked_1 = await evaluate_achievements(db_session, test_user)
     assert len(newly_unlocked_1) > 0
-    
+
     # Second evaluation should not unlock again
     newly_unlocked_2 = await evaluate_achievements(db_session, test_user)
     assert len(newly_unlocked_2) == 0
@@ -505,15 +506,15 @@ async def test_get_user_achievements_with_progress(
         )
         db_session.add(progress)
     await db_session.commit()
-    
+
     # Unlock first_lesson achievement
     await evaluate_achievements(db_session, test_user)
-    
+
     # Get achievements with status
     result = await get_user_achievements(db_session, test_user)
-    
+
     assert result["total_earned"] == 1  # Only first_lesson
-    
+
     # Find ten_lessons achievement
     ten_lessons = next(
         (a for a in result["achievements"] if a.code == "ten_lessons"),
@@ -548,10 +549,10 @@ async def test_get_user_achievements_total_points(
     )
     db_session.add(progress)
     await db_session.commit()
-    
+
     await evaluate_achievements(db_session, test_user)
-    
+
     result = await get_user_achievements(db_session, test_user)
-    
+
     # first_lesson (10) + perfect_score (25) = 35
     assert result["total_points"] == 35

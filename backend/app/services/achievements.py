@@ -122,7 +122,9 @@ async def evaluate_achievements(
             for progress in completed_progress:
                 if progress.started_at and progress.completed_at:
                     duration = (progress.completed_at - progress.started_at).total_seconds() / 60
-                    lesson = next((lesson for lesson in all_lessons if lesson.id == progress.lesson_id), None)
+                    lesson = next(
+                        (lesson for lesson in all_lessons if lesson.id == progress.lesson_id), None
+                    )
                     if (
                         lesson
                         and lesson.estimated_duration

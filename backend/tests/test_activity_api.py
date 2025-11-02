@@ -74,9 +74,7 @@ class TestActivityHeatmapAPI:
             response = await client.get("/activity/heatmap")
             assert response.status_code != 404
 
-    async def test_heatmap_returns_correct_structure(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_heatmap_returns_correct_structure(self, db: AsyncSession, test_user: User):
         """Test that heatmap returns correct response structure."""
         # Add some activities
         today = date.today()
@@ -105,9 +103,7 @@ class TestActivityHeatmapAPI:
             assert isinstance(entry["date"], str)
             assert isinstance(entry["count"], int)
 
-    async def test_heatmap_date_range_parameters(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_heatmap_date_range_parameters(self, db: AsyncSession, test_user: User):
         """Test that heatmap respects date range parameters."""
         today = date.today()
         start_date = today - timedelta(days=7)
@@ -129,9 +125,7 @@ class TestActivityHeatmapAPI:
         assert len(heatmap) > 0
         assert any(entry["date"] == str(today) for entry in heatmap)
 
-    async def test_heatmap_empty_for_new_user(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_heatmap_empty_for_new_user(self, db: AsyncSession, test_user: User):
         """Test heatmap returns empty list for user with no activities."""
         from app.services.activity import get_activity_heatmap
 
@@ -182,9 +176,7 @@ class TestDailyStatsAPI:
         assert stats["total_count"] == 3
         assert isinstance(stats["activity_by_type"], dict)
 
-    async def test_daily_stats_for_specific_date(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_daily_stats_for_specific_date(self, db: AsyncSession, test_user: User):
         """Test daily stats for a specific date."""
         today = date.today()
         yesterday = today - timedelta(days=1)
@@ -257,9 +249,7 @@ class TestActivityCalendarAPI:
             response = await client.get("/activity/calendar")
             assert response.status_code != 404
 
-    async def test_calendar_combines_heatmap_and_streak(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_calendar_combines_heatmap_and_streak(self, db: AsyncSession, test_user: User):
         """Test that calendar endpoint combines heatmap and streak data."""
         today = date.today()
 
@@ -291,9 +281,7 @@ class TestActivityCalendarAPI:
 class TestActivityAPIIntegration:
     """Integration tests for activity tracking API."""
 
-    async def test_activity_logged_on_lesson_completion(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_activity_logged_on_lesson_completion(self, db: AsyncSession, test_user: User):
         """Test that activities are logged when lessons are completed."""
         # This would integrate with the progress service
         from app.services.activity import log_activity
@@ -316,9 +304,7 @@ class TestActivityAPIIntegration:
         assert len(heatmap) > 0
         assert heatmap[0]["count"] >= 1
 
-    async def test_heatmap_aggregates_multiple_activities(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_heatmap_aggregates_multiple_activities(self, db: AsyncSession, test_user: User):
         """Test that heatmap correctly aggregates multiple activities per day."""
         today = date.today()
 
@@ -340,9 +326,7 @@ class TestActivityAPIIntegration:
 
         from app.services.activity import get_activity_heatmap
 
-        heatmap = await get_activity_heatmap(
-            db, test_user, start_date=today, end_date=today
-        )
+        heatmap = await get_activity_heatmap(db, test_user, start_date=today, end_date=today)
 
         assert len(heatmap) == 1
         assert heatmap[0]["date"] == str(today)
@@ -387,9 +371,7 @@ class TestActivityAPIIntegration:
         # Total active days should be 7
         assert streak["total_active_days"] == 7
 
-    async def test_activity_retrieval_accuracy(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_activity_retrieval_accuracy(self, db: AsyncSession, test_user: User):
         """Test accuracy of activity writes and retrieval."""
         today = date.today()
 
@@ -415,9 +397,7 @@ class TestActivityAPIIntegration:
         from sqlalchemy import select
 
         query = (
-            select(ActivityLog)
-            .where(ActivityLog.user_id == test_user.id)
-            .order_by(ActivityLog.id)
+            select(ActivityLog).where(ActivityLog.user_id == test_user.id).order_by(ActivityLog.id)
         )
         result = await db.execute(query)
         activities = list(result.scalars().all())

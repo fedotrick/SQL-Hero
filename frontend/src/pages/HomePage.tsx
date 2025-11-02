@@ -114,9 +114,11 @@ export const HomePage = () => {
             <Link to="/modules">
               <Button fullWidth>Карта модулей</Button>
             </Link>
-            <Button variant="secondary" fullWidth>
-              Повторить
-            </Button>
+            <Link to="/leaderboard">
+              <Button variant="secondary" fullWidth>
+                Рейтинг
+              </Button>
+            </Link>
           </div>
         </section>
 

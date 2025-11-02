@@ -2,6 +2,7 @@
 CLI command to refresh the leaderboard cache.
 This can be used in cron jobs or scheduled tasks.
 """
+
 import asyncio
 import sys
 

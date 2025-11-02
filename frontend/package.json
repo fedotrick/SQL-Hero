@@ -6,13 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
     "lint": "eslint .",
     "lint:style": "stylelint '**/*.css'",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "prepare": "husky"
   },

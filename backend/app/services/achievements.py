@@ -20,6 +20,7 @@ from app.schemas.achievements import (
     AchievementUnlockedNotification,
     AchievementWithStatus,
 )
+from app.services.telegram_notifications import telegram_service
 
 
 async def evaluate_achievements(
@@ -162,15 +163,28 @@ async def evaluate_achievements(
             db.add(activity_log)
 
             # Add to newly unlocked list
-            newly_unlocked.append(
-                AchievementUnlockedNotification(
-                    achievement_id=achievement.id,
-                    achievement_code=achievement.code,
-                    title=achievement.title,
-                    description=achievement.description,
-                    icon=achievement.icon,
-                    points=achievement.points,
-                )
+            achievement_notification = AchievementUnlockedNotification(
+                achievement_id=achievement.id,
+                achievement_code=achievement.code,
+                title=achievement.title,
+                description=achievement.description,
+                icon=achievement.icon,
+                points=achievement.points,
+            )
+            newly_unlocked.append(achievement_notification)
+
+            # Queue notification for delivery
+            await telegram_service.send_achievement_notification(
+                db=db,
+                user_id=user.id,
+                achievement_data={
+                    "achievement_id": achievement.id,
+                    "achievement_code": achievement.code,
+                    "title": achievement.title,
+                    "description": achievement.description,
+                    "icon": achievement.icon,
+                    "points": achievement.points,
+                },
             )
 
     # Commit all changes

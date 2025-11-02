@@ -25,6 +25,7 @@ export const ProfilePage = () => {
     level: 5,
     xp: 2750,
     xpToNextLevel: 3000,
+    streak: 12,
     totalLessons: 45,
     completedLessons: 38,
     hoursLearned: 24,

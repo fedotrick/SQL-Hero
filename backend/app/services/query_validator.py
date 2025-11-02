@@ -101,14 +101,11 @@ class QueryValidator:
         ]
 
         self._compiled_dangerous_patterns = [
-            (name, re.compile(pattern, re.IGNORECASE))
-            for name, pattern in self.DANGEROUS_PATTERNS
+            (name, re.compile(pattern, re.IGNORECASE)) for name, pattern in self.DANGEROUS_PATTERNS
         ]
 
         # Get effective allowed query types
-        self.allowed_query_types = self.lesson_policy.get_allowed_types(
-            config.allowed_query_types
-        )
+        self.allowed_query_types = self.lesson_policy.get_allowed_types(config.allowed_query_types)
 
     def validate(self, query: str, lesson_id: int | None = None) -> QueryValidationResult:
         """
@@ -173,8 +170,7 @@ class QueryValidator:
                 )
             else:
                 errors.append(
-                    f"Query type '{detected_type}' is not allowed. "
-                    f"Allowed types: {allowed_str}"
+                    f"Query type '{detected_type}' is not allowed. Allowed types: {allowed_str}"
                 )
 
         # Quality warnings

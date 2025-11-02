@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BookOpen, Trophy, User, Map } from "lucide-react";
+import { BookOpen, Trophy, User, Map, Award } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export interface NavigationItem {
@@ -22,6 +22,11 @@ const navigationItems: NavigationItem[] = [
     path: "/modules",
     label: "Модули",
     icon: <Map size={24} />,
+  },
+  {
+    path: "/leaderboard",
+    label: "Рейтинг",
+    icon: <Award size={24} />,
   },
   {
     path: "/achievements",

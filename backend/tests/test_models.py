@@ -41,9 +41,7 @@ async def test_engine():
 
 @pytest.fixture
 async def session(test_engine):
-    async_session = sessionmaker(
-        test_engine, class_=AsyncSession, expire_on_commit=False
-    )
+    async_session = sessionmaker(test_engine, class_=AsyncSession, expire_on_commit=False)
     async with async_session() as session:
         yield session
 
@@ -131,8 +129,7 @@ class TestLessonModel:
             (
                 idx
                 for idx in indexes
-                if "module_id" in idx["column_names"]
-                and "order" in idx["column_names"]
+                if "module_id" in idx["column_names"] and "order" in idx["column_names"]
             ),
             None,
         )
@@ -175,8 +172,7 @@ class TestUserProgressModel:
             (
                 idx
                 for idx in indexes
-                if "user_id" in idx["column_names"]
-                and "status" in idx["column_names"]
+                if "user_id" in idx["column_names"] and "status" in idx["column_names"]
             ),
             None,
         )
@@ -252,8 +248,7 @@ class TestLeaderboardCacheModel:
             (
                 idx
                 for idx in indexes
-                if "rank" in idx["column_names"]
-                and "total_score" in idx["column_names"]
+                if "rank" in idx["column_names"] and "total_score" in idx["column_names"]
             ),
             None,
         )
@@ -341,9 +336,7 @@ class TestModelConstraints:
 
     def test_user_progress_not_null_constraints(self, sync_engine):
         inspector = inspect(sync_engine)
-        columns = {
-            col["name"]: col for col in inspector.get_columns("user_progress")
-        }
+        columns = {col["name"]: col for col in inspector.get_columns("user_progress")}
         assert columns["user_id"]["nullable"] is False
         assert columns["lesson_id"]["nullable"] is False
         assert columns["status"]["nullable"] is False
@@ -351,18 +344,14 @@ class TestModelConstraints:
 
     def test_achievement_not_null_constraints(self, sync_engine):
         inspector = inspect(sync_engine)
-        columns = {
-            col["name"]: col for col in inspector.get_columns("achievements")
-        }
+        columns = {col["name"]: col for col in inspector.get_columns("achievements")}
         assert columns["type"]["nullable"] is False
         assert columns["title"]["nullable"] is False
         assert columns["points"]["nullable"] is False
 
     def test_activity_log_not_null_constraints(self, sync_engine):
         inspector = inspect(sync_engine)
-        columns = {
-            col["name"]: col for col in inspector.get_columns("activity_log")
-        }
+        columns = {col["name"]: col for col in inspector.get_columns("activity_log")}
         assert columns["user_id"]["nullable"] is False
         assert columns["activity_type"]["nullable"] is False
         assert columns["created_at"]["nullable"] is False

@@ -48,6 +48,7 @@ class TestQueryExecutorTimeout:
     @pytest.mark.asyncio
     async def test_timeout_enforcement(self, executor: MySQLQueryExecutor, mock_sandbox: Sandbox):
         """Test that queries timing out raise TimeoutError."""
+
         # Create a mock query that would take too long
         async def slow_query():
             await asyncio.sleep(3)  # Longer than timeout

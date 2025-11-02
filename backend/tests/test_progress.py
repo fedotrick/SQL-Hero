@@ -479,7 +479,7 @@ class TestProgressSummary:
         for i in range(3):
             lesson = Lesson(
                 module_id=test_module.id,
-                title=f"Lesson {i+1}",
+                title=f"Lesson {i + 1}",
                 order=i + 1,
                 is_published=True,
             )

@@ -92,9 +92,7 @@ class MySQLSchemaManager(ISchemaManager):
         finally:
             conn.close()
 
-    async def create_sandbox_user(
-        self, username: str, password: str, schema_name: str
-    ) -> None:
+    async def create_sandbox_user(self, username: str, password: str, schema_name: str) -> None:
         """Create a sandbox user with limited privileges."""
         conn = await self._get_admin_connection()
         try:
@@ -123,9 +121,7 @@ class MySQLSchemaManager(ISchemaManager):
         finally:
             conn.close()
 
-    async def _get_admin_connection(
-        self, database: str | None = None
-    ) -> aiomysql.Connection:
+    async def _get_admin_connection(self, database: str | None = None) -> aiomysql.Connection:
         """Get admin connection to MySQL."""
         return await aiomysql.connect(
             host=self.config.mysql_host,

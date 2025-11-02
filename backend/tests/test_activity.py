@@ -83,9 +83,7 @@ class TestActivityLogging:
         assert activity.details == "Test activity"
         assert activity.created_at is not None
 
-    async def test_log_activity_without_optional_fields(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_log_activity_without_optional_fields(self, db: AsyncSession, test_user: User):
         """Test logging activity without optional fields."""
         activity = await log_activity(
             db=db,
@@ -100,9 +98,7 @@ class TestActivityLogging:
         assert activity.entity_type is None
         assert activity.details is None
 
-    async def test_activity_persisted_to_database(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_activity_persisted_to_database(self, db: AsyncSession, test_user: User):
         """Test that activities are properly persisted to database."""
         await log_activity(
             db=db,
@@ -141,9 +137,7 @@ class TestActivityHeatmap:
         await db.commit()
 
         today = date.today()
-        heatmap = await get_activity_heatmap(
-            db, test_user, start_date=today, end_date=today
-        )
+        heatmap = await get_activity_heatmap(db, test_user, start_date=today, end_date=today)
 
         assert len(heatmap) == 1
         assert heatmap[0]["date"] == str(today)
@@ -197,9 +191,7 @@ class TestActivityHeatmap:
         assert heatmap_sorted[2]["date"] == str(today)
         assert heatmap_sorted[2]["count"] == 1
 
-    async def test_heatmap_date_range_filtering(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_heatmap_date_range_filtering(self, db: AsyncSession, test_user: User):
         """Test that heatmap respects date range filters."""
         today = date.today()
         old_date = today - timedelta(days=400)
@@ -478,9 +470,7 @@ class TestStreakData:
         assert streak["current_streak"] == 1
         assert streak["last_active_date"] == str(yesterday)
 
-    async def test_streak_two_days_ago_breaks_streak(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_streak_two_days_ago_breaks_streak(self, db: AsyncSession, test_user: User):
         """Test that streak is broken if last activity was 2+ days ago."""
         today = date.today()
         two_days_ago = today - timedelta(days=2)
@@ -500,9 +490,7 @@ class TestStreakData:
         assert streak["longest_streak"] == 1
         assert streak["total_active_days"] == 1
 
-    async def test_streak_multiple_activities_same_day(
-        self, db: AsyncSession, test_user: User
-    ):
+    async def test_streak_multiple_activities_same_day(self, db: AsyncSession, test_user: User):
         """Test that multiple activities on the same day count as one day."""
         today = date.today()
 

@@ -17,3 +17,9 @@ export type {
 
 export { BottomNavigation } from "./BottomNavigation";
 export type { BottomNavigationProps, NavigationItem } from "./BottomNavigation";
+
+export { Avatar } from "./Avatar";
+export type { AvatarProps, AvatarSize } from "./Avatar";
+
+export { Skeleton } from "./Skeleton";
+export type { SkeletonProps } from "./Skeleton";

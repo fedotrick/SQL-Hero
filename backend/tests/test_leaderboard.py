@@ -1,6 +1,7 @@
 """
 Simplified tests for leaderboard service functionality.
 """
+
 import random
 from datetime import datetime
 
@@ -57,7 +58,7 @@ async def test_refresh_leaderboard_basic(db_session: AsyncSession):
     # Clean up
     await db_session.execute(delete(LeaderboardCache))
     await db_session.commit()
-    
+
     # Create test users
     base_id = random.randint(100000000, 999999999)
     for i in range(5):
@@ -70,17 +71,17 @@ async def test_refresh_leaderboard_basic(db_session: AsyncSession):
         )
         db_session.add(user)
     await db_session.commit()
-    
+
     # Refresh leaderboard
     entries_updated = await refresh_leaderboard_cache(db_session)
-    
+
     assert entries_updated >= 5
-    
+
     # Verify cache entries
     query = select(LeaderboardCache).order_by(LeaderboardCache.rank).limit(5)
     result = await db_session.execute(query)
     cache_entries = result.scalars().all()
-    
+
     assert len(cache_entries) >= 5
 
 
@@ -90,22 +91,22 @@ async def test_refresh_leaderboard_ordering(db_session: AsyncSession):
     # Clean up
     await db_session.execute(delete(LeaderboardCache))
     await db_session.commit()
-    
+
     # Create users with different XP
     base_id = random.randint(100000000, 999999999)
     user1 = User(telegram_id=base_id, username="user1", xp=100, level=1, is_active=True)
     user2 = User(telegram_id=base_id + 1, username="user2", xp=300, level=3, is_active=True)
     user3 = User(telegram_id=base_id + 2, username="user3", xp=200, level=2, is_active=True)
-    
+
     db_session.add_all([user1, user2, user3])
     await db_session.commit()
     await db_session.refresh(user1)
     await db_session.refresh(user2)
     await db_session.refresh(user3)
-    
+
     # Refresh leaderboard
     await refresh_leaderboard_cache(db_session)
-    
+
     # Get entries for our users
     query = (
         select(LeaderboardCache)
@@ -114,9 +115,9 @@ async def test_refresh_leaderboard_ordering(db_session: AsyncSession):
     )
     result = await db_session.execute(query)
     entries = result.scalars().all()
-    
+
     # user2 (300 XP) should be rank 1
-    # user3 (200 XP) should be rank 2  
+    # user3 (200 XP) should be rank 2
     # user1 (100 XP) should be rank 3
     user_ranks = {e.user_id: e.rank for e in entries}
     assert user_ranks[user2.id] < user_ranks[user3.id] < user_ranks[user1.id]
@@ -128,7 +129,7 @@ async def test_get_leaderboard_returns_top_users(db_session: AsyncSession):
     # Clean up
     await db_session.execute(delete(LeaderboardCache))
     await db_session.commit()
-    
+
     # Create users
     base_id = random.randint(100000000, 999999999)
     for i in range(10):
@@ -141,13 +142,13 @@ async def test_get_leaderboard_returns_top_users(db_session: AsyncSession):
         )
         db_session.add(user)
     await db_session.commit()
-    
+
     # Refresh cache
     await refresh_leaderboard_cache(db_session)
-    
+
     # Get top 5
     result = await get_leaderboard(db_session, limit=5)
-    
+
     assert len(result["entries"]) <= 5
     assert result["total_users"] >= 10
 
@@ -158,7 +159,7 @@ async def test_get_leaderboard_with_current_user(db_session: AsyncSession):
     # Clean up
     await db_session.execute(delete(LeaderboardCache))
     await db_session.commit()
-    
+
     # Create users
     base_id = random.randint(100000000, 999999999)
     users = []
@@ -173,16 +174,16 @@ async def test_get_leaderboard_with_current_user(db_session: AsyncSession):
         db_session.add(user)
         users.append(user)
     await db_session.commit()
-    
+
     for u in users:
         await db_session.refresh(u)
-    
+
     # Refresh cache
     await refresh_leaderboard_cache(db_session)
-    
+
     # Get top 3 with user at rank 5
     result = await get_leaderboard(db_session, limit=3, user_id=users[4].id)
-    
+
     # Should get top 3
     assert len(result["entries"]) <= 3
     # Current user should be included separately if not in top 3
@@ -196,29 +197,29 @@ async def test_refresh_leaderboard_replaces_cache(db_session: AsyncSession):
     # Clean up
     await db_session.execute(delete(LeaderboardCache))
     await db_session.commit()
-    
+
     # Create user
     base_id = random.randint(100000000, 999999999)
     user = User(telegram_id=base_id, username="user", xp=500, level=5, is_active=True)
     db_session.add(user)
     await db_session.commit()
     await db_session.refresh(user)
-    
+
     # First refresh
     await refresh_leaderboard_cache(db_session)
-    
+
     # Modify user XP
     user.xp = 100
     await db_session.commit()
-    
+
     # Second refresh
     await refresh_leaderboard_cache(db_session)
-    
+
     # Check cache was updated
     query = select(LeaderboardCache).where(LeaderboardCache.user_id == user.id)
     result = await db_session.execute(query)
     entry = result.scalar_one()
-    
+
     assert entry.total_score == 100
 
 
@@ -228,19 +229,19 @@ async def test_leaderboard_excludes_inactive_users(db_session: AsyncSession):
     # Clean up
     await db_session.execute(delete(LeaderboardCache))
     await db_session.commit()
-    
+
     # Create users
     base_id = random.randint(100000000, 999999999)
     active = User(telegram_id=base_id, username="active", xp=100, level=1, is_active=True)
     inactive = User(telegram_id=base_id + 1, username="inactive", xp=200, level=2, is_active=False)
-    
+
     db_session.add_all([active, inactive])
     await db_session.commit()
     await db_session.refresh(inactive)
-    
+
     # Refresh
     await refresh_leaderboard_cache(db_session)
-    
+
     # Inactive user should not be in cache
     query = select(LeaderboardCache).where(LeaderboardCache.user_id == inactive.id)
     result = await db_session.execute(query)
@@ -253,8 +254,8 @@ async def test_get_leaderboard_empty(db_session: AsyncSession):
     # Clean up everything
     await db_session.execute(delete(LeaderboardCache))
     await db_session.commit()
-    
+
     result = await get_leaderboard(db_session)
-    
+
     assert result["entries"] == []
     assert result["total_users"] >= 0

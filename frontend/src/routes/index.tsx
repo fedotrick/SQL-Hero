@@ -7,6 +7,7 @@ import { ComponentShowcase } from "../pages/ComponentShowcase";
 import { ModulesMapPage } from "../pages/ModulesMapPage";
 import { LessonsListPage } from "../pages/LessonsListPage";
 import { LessonPlayerPage } from "../pages/LessonPlayerPage";
+import { LeaderboardPage } from "../pages/LeaderboardPage";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,14 @@ export const router = createBrowserRouter([
     element: (
       <BaseLayout>
         <AchievementsPage />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: "/leaderboard",
+    element: (
+      <BaseLayout>
+        <LeaderboardPage />
       </BaseLayout>
     ),
   },

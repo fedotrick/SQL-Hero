@@ -34,8 +34,7 @@ async def refresh_leaderboard_cache(db: AsyncSession) -> int:
         )
         .outerjoin(
             UserProgress,
-            (UserProgress.user_id == User.id)
-            & (UserProgress.status == ProgressStatus.COMPLETED),
+            (UserProgress.user_id == User.id) & (UserProgress.status == ProgressStatus.COMPLETED),
         )
         .outerjoin(UserAchievement, UserAchievement.user_id == User.id)
         .where(User.is_active == True)  # noqa: E712
@@ -69,9 +68,7 @@ async def refresh_leaderboard_cache(db: AsyncSession) -> int:
     return len(cache_entries)
 
 
-async def get_leaderboard(
-    db: AsyncSession, limit: int = 100, user_id: int | None = None
-) -> dict:
+async def get_leaderboard(db: AsyncSession, limit: int = 100, user_id: int | None = None) -> dict:
     """
     Get the top N users from the leaderboard cache, plus the current user's rank if not in top N.
 

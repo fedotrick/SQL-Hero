@@ -197,7 +197,9 @@ class TestSQLInjectionPrevention:
     """Test that SQL injection attempts are detected and blocked."""
 
     def test_union_select_injection(self, validator: QueryValidator) -> None:
-        result = validator.validate("SELECT * FROM users WHERE id = 1 UNION SELECT password FROM users")
+        result = validator.validate(
+            "SELECT * FROM users WHERE id = 1 UNION SELECT password FROM users"
+        )
         assert result.is_valid is False
         assert any("dangerous pattern" in error.lower() for error in result.errors)
 
@@ -303,7 +305,9 @@ class TestFactoryFunctions:
         assert result.is_valid is False
 
     def test_create_module_validator(self, default_config: SandboxConfig) -> None:
-        validator = create_module_validator(default_config, module_id=2, allowed_types=["SELECT", "UPDATE"])
+        validator = create_module_validator(
+            default_config, module_id=2, allowed_types=["SELECT", "UPDATE"]
+        )
 
         result = validator.validate("UPDATE users SET name = 'Jane' WHERE id = 1")
         assert result.is_valid is True
@@ -385,7 +389,9 @@ class TestEdgeCases:
         # Current implementation will block this (overly conservative)
         assert result.is_valid is False
 
-    def test_create_database_blocked_even_if_create_allowed(self, default_config: SandboxConfig) -> None:
+    def test_create_database_blocked_even_if_create_allowed(
+        self, default_config: SandboxConfig
+    ) -> None:
         # Even if we were to allow CREATE in the future, CREATE DATABASE should still be blocked
         # For now, use default config which doesn't allow CREATE anyway
         validator = QueryValidator(default_config)

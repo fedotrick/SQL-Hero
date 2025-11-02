@@ -139,6 +139,7 @@ async def test_lessons(test_db: AsyncSession, test_modules: list[Module]) -> lis
 @pytest.fixture
 async def authenticated_client(test_db: AsyncSession, test_user: User):
     """Создание аутентифицированного HTTP клиента."""
+
     async def override_get_db():
         yield test_db
 
@@ -146,7 +147,9 @@ async def authenticated_client(test_db: AsyncSession, test_user: User):
 
     app.dependency_overrides[get_db] = override_get_db
 
-    access_token = create_access_token(data={"sub": str(test_user.id), "telegram_id": test_user.telegram_id})
+    access_token = create_access_token(
+        data={"sub": str(test_user.id), "telegram_id": test_user.telegram_id}
+    )
 
     async with httpx.AsyncClient(
         transport=ASGITransport(app=app),
@@ -160,6 +163,7 @@ async def authenticated_client(test_db: AsyncSession, test_user: User):
 
 async def test_list_modules_unauthenticated(test_db: AsyncSession):
     """Тест: неаутентифицированный запрос должен вернуть 401."""
+
     async def override_get_db():
         yield test_db
 
@@ -167,7 +171,9 @@ async def test_list_modules_unauthenticated(test_db: AsyncSession):
 
     app.dependency_overrides[get_db] = override_get_db
 
-    async with httpx.AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+    async with httpx.AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
         response = await client.get("/courses/modules")
 
     app.dependency_overrides.clear()

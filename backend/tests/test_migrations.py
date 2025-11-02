@@ -67,23 +67,17 @@ class TestMigrations:
     def test_schema_after_upgrade(self, sync_engine):
         inspector = inspect(sync_engine)
 
-        users_columns = {
-            col["name"]: col for col in inspector.get_columns("users")
-        }
+        users_columns = {col["name"]: col for col in inspector.get_columns("users")}
         assert "telegram_id" in users_columns
         assert "username" in users_columns
         assert "is_active" in users_columns
 
-        modules_columns = {
-            col["name"]: col for col in inspector.get_columns("modules")
-        }
+        modules_columns = {col["name"]: col for col in inspector.get_columns("modules")}
         assert "title" in modules_columns
         assert "order" in modules_columns
         assert "is_published" in modules_columns
 
-        lessons_columns = {
-            col["name"]: col for col in inspector.get_columns("lessons")
-        }
+        lessons_columns = {col["name"]: col for col in inspector.get_columns("lessons")}
         assert "module_id" in lessons_columns
         assert "title" in lessons_columns
         assert "content" in lessons_columns
@@ -118,31 +112,21 @@ class TestMigrations:
 
         activity_log_indexes = inspector.get_indexes("activity_log")
         created_at_indexes = [
-            idx
-            for idx in activity_log_indexes
-            if "created_at" in idx["column_names"]
+            idx for idx in activity_log_indexes if "created_at" in idx["column_names"]
         ]
         assert len(created_at_indexes) > 0
 
         user_progress_indexes = inspector.get_indexes("user_progress")
-        composite_indexes = [
-            idx
-            for idx in user_progress_indexes
-            if len(idx["column_names"]) > 1
-        ]
+        composite_indexes = [idx for idx in user_progress_indexes if len(idx["column_names"]) > 1]
         assert len(composite_indexes) > 0
 
     def test_unique_constraints_exist(self, sync_engine):
         inspector = inspect(sync_engine)
 
-        user_progress_constraints = inspector.get_unique_constraints(
-            "user_progress"
-        )
+        user_progress_constraints = inspector.get_unique_constraints("user_progress")
         assert len(user_progress_constraints) > 0
 
-        user_achievements_constraints = inspector.get_unique_constraints(
-            "user_achievements"
-        )
+        user_achievements_constraints = inspector.get_unique_constraints("user_achievements")
         assert len(user_achievements_constraints) > 0
 
     def test_downgrade_and_upgrade_cycle(self, alembic_config, sync_engine):
@@ -172,9 +156,7 @@ class TestMigrations:
 
     async def test_current_revision_not_empty(self, test_engine):
         async with test_engine.connect() as conn:
-            result = await conn.execute(
-                text("SELECT version_num FROM alembic_version")
-            )
+            result = await conn.execute(text("SELECT version_num FROM alembic_version"))
             row = result.fetchone()
             assert row is not None
             assert row[0] is not None

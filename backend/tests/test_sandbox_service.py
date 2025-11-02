@@ -124,14 +124,20 @@ class TestQueryValidator:
         result = validator.validate("SELECT * FROM information_schema.tables")
 
         assert result.is_valid is False
-        assert any("system schema" in error.lower() or "blocked" in error.lower() for error in result.errors)
+        assert any(
+            "system schema" in error.lower() or "blocked" in error.lower()
+            for error in result.errors
+        )
 
     def test_validate_mysql_schema_blocked(self, sandbox_config: SandboxConfig) -> None:
         validator = QueryValidator(sandbox_config)
         result = validator.validate("SELECT * FROM mysql.user")
 
         assert result.is_valid is False
-        assert any("system schema" in error.lower() or "blocked" in error.lower() for error in result.errors)
+        assert any(
+            "system schema" in error.lower() or "blocked" in error.lower()
+            for error in result.errors
+        )
 
     def test_validate_with_cte(self, sandbox_config: SandboxConfig) -> None:
         validator = QueryValidator(sandbox_config)

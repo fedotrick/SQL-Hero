@@ -23,3 +23,6 @@ export type { AvatarProps, AvatarSize } from "./Avatar";
 
 export { Skeleton } from "./Skeleton";
 export type { SkeletonProps } from "./Skeleton";
+
+export { StreakCalendar } from "./StreakCalendar";
+export type { StreakCalendarProps } from "./StreakCalendar";

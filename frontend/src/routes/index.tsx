@@ -3,6 +3,7 @@ import { BaseLayout } from "../components/layout/BaseLayout";
 import { HomePage } from "../pages/HomePage";
 import { AchievementsPage } from "../pages/AchievementsPage";
 import { ProfilePage } from "../pages/ProfilePage";
+import { StatsPage } from "../pages/StatsPage";
 import { ComponentShowcase } from "../pages/ComponentShowcase";
 import { ModulesMapPage } from "../pages/ModulesMapPage";
 import { LessonsListPage } from "../pages/LessonsListPage";
@@ -63,6 +64,14 @@ export const router = createBrowserRouter([
     element: (
       <BaseLayout>
         <ProfilePage />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: "/stats",
+    element: (
+      <BaseLayout>
+        <StatsPage />
       </BaseLayout>
     ),
   },

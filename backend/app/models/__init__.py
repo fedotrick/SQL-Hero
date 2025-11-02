@@ -7,6 +7,9 @@ from app.models.database import (
     LeaderboardCache,
     Lesson,
     Module,
+    NotificationStatus,
+    NotificationType,
+    PendingNotification,
     ProgressStatus,
     User,
     UserAchievement,
@@ -28,4 +31,7 @@ __all__ = [
     "ProgressStatus",
     "AchievementType",
     "ActivityType",
+    "PendingNotification",
+    "NotificationType",
+    "NotificationStatus",
 ]

@@ -41,6 +41,19 @@ class ActivityType(enum.Enum):
     LOGIN = "login"
 
 
+class NotificationType(enum.Enum):
+    ACHIEVEMENT_UNLOCKED = "achievement_unlocked"
+    REMINDER = "reminder"
+    STREAK_REMINDER = "streak_reminder"
+    DAILY_CHALLENGE = "daily_challenge"
+
+
+class NotificationStatus(enum.Enum):
+    PENDING = "pending"
+    SENT = "sent"
+    FAILED = "failed"
+
+
 class User(Base):
     __tablename__ = "users"
 
@@ -220,4 +233,32 @@ class ActivityLog(Base):
     __table_args__ = (
         Index("idx_user_activity_date", "user_id", "activity_type", "created_at"),
         Index("idx_created_at", "created_at"),
+    )
+
+
+class PendingNotification(Base):
+    __tablename__ = "pending_notifications"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
+    notification_type: Mapped[NotificationType] = mapped_column(
+        Enum(NotificationType), nullable=False, index=True
+    )
+    status: Mapped[NotificationStatus] = mapped_column(
+        Enum(NotificationStatus), default=NotificationStatus.PENDING, nullable=False, index=True
+    )
+    message: Mapped[str] = mapped_column(Text, nullable=False)
+    metadata: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
+    sent_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, nullable=False, index=True
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+    )
+
+    __table_args__ = (
+        Index("idx_status_created", "status", "created_at"),
+        Index("idx_user_type_status", "user_id", "notification_type", "status"),
     )

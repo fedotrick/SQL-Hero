@@ -248,7 +248,7 @@ class PendingNotification(Base):
         Enum(NotificationStatus), default=NotificationStatus.PENDING, nullable=False, index=True
     )
     message: Mapped[str] = mapped_column(Text, nullable=False)
-    metadata: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    notification_metadata: Mapped[dict | None] = mapped_column("metadata", JSON, nullable=True)
     error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
     sent_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(

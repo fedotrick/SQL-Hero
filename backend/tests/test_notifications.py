@@ -145,7 +145,7 @@ async def test_queue_notification(db_session: AsyncSession, test_user: User):
     assert notification.notification_type == NotificationType.ACHIEVEMENT_UNLOCKED
     assert notification.status == NotificationStatus.PENDING
     assert notification.message == "Test notification"
-    assert notification.metadata == {"test": "data"}
+    assert notification.notification_metadata == {"test": "data"}
 
 
 @pytest.mark.asyncio
@@ -406,7 +406,7 @@ async def test_send_reminder_notification(
 
     assert notification.notification_type == NotificationType.REMINDER
     assert notification.message == "Time to practice!"
-    assert notification.metadata == {"reminder_type": "daily"}
+    assert notification.notification_metadata == {"reminder_type": "daily"}
     assert notification.status == NotificationStatus.PENDING
 
 
@@ -464,7 +464,7 @@ async def test_send_achievement_notification(
     )
 
     assert notification.notification_type == NotificationType.ACHIEVEMENT_UNLOCKED
-    assert notification.metadata == achievement_data
+    assert notification.notification_metadata == achievement_data
     assert notification.status == NotificationStatus.PENDING
     assert "🎓" in notification.message
     assert "First Steps" in notification.message

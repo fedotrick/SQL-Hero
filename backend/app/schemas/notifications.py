@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict
 class NotificationBase(BaseModel):
     notification_type: str
     message: str
-    metadata: dict | None = None
+    notification_metadata: dict | None = None
 
 
 class PendingNotificationCreate(NotificationBase):

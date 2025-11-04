@@ -33,7 +33,7 @@ class TelegramNotificationService:
             user_id=user_id,
             notification_type=notification_type,
             message=message,
-            metadata=metadata,
+            notification_metadata=metadata,
             status=NotificationStatus.PENDING,
         )
         db.add(notification)
